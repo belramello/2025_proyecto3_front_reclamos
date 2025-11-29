@@ -1,6 +1,5 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import { AuthContext } from "../auth/context/authContext";
 import { loginRequest } from "../services/ServicioAutenticacion"
 import FormInput from "../components/formulario";
 import ErrorMessage from "../components/mensajeError";
@@ -54,7 +53,7 @@ const LoginPage = () => {
         <div className="card-body p-5 text-center">
           <h2 className="fw-bold mb-3 ">¡Bienvenido!</h2>
           <p className="text-muted mb-4">
-            Iniciá sesión para gestionar ventas, stock y administración.
+            Iniciá sesión para gestionar tus reclamos de manera fácil y rápida.
           </p>
 
           <form onSubmit={handleSubmit}>
