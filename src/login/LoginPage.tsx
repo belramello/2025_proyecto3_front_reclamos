@@ -1,9 +1,8 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginRequest } from "../services/ServicioAutenticacion"
+import { loginRequest } from "../services/ServicioAutenticacion";
 import FormInput from "../components/formulario";
 import ErrorMessage from "../components/mensajeError";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "./LoginScreen.css";
 import ActionButton from "../components/boton";
 import { AuthContext } from "../auth/context/contexto";

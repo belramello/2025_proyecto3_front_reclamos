@@ -8,7 +8,13 @@ interface ConfirmModalProps {
   onCancel: () => void;
 }
 
-const ConfirmModal = ({ show, title, message, onConfirm, onCancel }: ConfirmModalProps) => (
+const ConfirmModal = ({
+  show,
+  title,
+  message,
+  onConfirm,
+  onCancel,
+}: ConfirmModalProps) => (
   <Modal show={show} onHide={onCancel} centered>
     <Modal.Header closeButton style={{ borderBottom: "1px solid #7c8d9eff" }}>
       <Modal.Title className="text-center w-100" style={{ fontWeight: 600 }}>
@@ -16,11 +22,17 @@ const ConfirmModal = ({ show, title, message, onConfirm, onCancel }: ConfirmModa
       </Modal.Title>
     </Modal.Header>
 
-    <Modal.Body className="text-center" style={{ fontSize: "1rem", color: "#1b484bff" }}>
+    <Modal.Body
+      className="text-center"
+      style={{ fontSize: "1rem", color: "#1b484bff" }}
+    >
       {message}
     </Modal.Body>
 
-    <Modal.Footer className="d-flex justify-content-center" style={{ gap: "1rem", borderTop: "1px solid #dee2e6" }}>
+    <Modal.Footer
+      className="d-flex justify-content-center"
+      style={{ gap: "1rem", borderTop: "1px solid #dee2e6" }}
+    >
       <Button
         variant="secondary"
         onClick={onCancel}

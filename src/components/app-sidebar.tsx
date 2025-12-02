@@ -1,11 +1,4 @@
-import {
-  AtSignIcon,
-  Calendar,
-  ChartArea,
-  ChartBar,
-  Home,
-  Inbox,
-} from "lucide-react";
+import { AtSignIcon, ChartArea, Home } from "lucide-react";
 
 import {
   Sidebar,
