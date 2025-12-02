@@ -1,23 +1,18 @@
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-import { Button } from "@/components/ui/button";
+import './App.css'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import LoginPage from './login/LoginPage'
+import FeedbackPage from './feedback/FeedbackPage'
 
 function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <Button variant="outline">Button</Button>
-    </>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/feedback" element={<FeedbackPage />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;
