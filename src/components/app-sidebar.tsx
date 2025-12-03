@@ -15,12 +15,12 @@ import {
 const items = [
   {
     title: "Mi Subárea",
-    url: "#",
+    url: "mi-subarea",
     icon: Home,
   },
   {
     title: "Mis Reclamos Asignados",
-    url: "#",
+    url: "inicio",
     icon: AtSignIcon,
   },
   {
