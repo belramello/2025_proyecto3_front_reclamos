@@ -18,6 +18,7 @@ import { SelectSubareaDropdown } from "@/components/select-subarea-dropdown";
 import { SelectEmpleadoDropdown } from "@/components/select-empleado-dropdown";
 import { reasignarReclamo } from "@/services/ReclamosService";
 import { ErrorAlert } from "@/components/error-alert";
+import { Loader2 } from "lucide-react";
 interface ReasignarReclamoDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
@@ -41,6 +42,7 @@ const ReasignarReclamoDialog = ({
   const [destinoId, setDestinoId] = useState("");
   const [comentario, setComentario] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -48,6 +50,7 @@ const ReasignarReclamoDialog = ({
       return;
     }
     try {
+      setLoading(true);
       await reasignarReclamo(
         reclamo.reclamoId,
         tipoAsignacion,
@@ -65,6 +68,8 @@ const ReasignarReclamoDialog = ({
         mensaje = err.response.data.message.join(", ");
       }
       setError("Descripción: " + mensaje);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -161,8 +166,18 @@ const ReasignarReclamoDialog = ({
                   Cancelar
                 </Button>
               </DialogClose>
-              <Button type="submit" disabled={!tipoAsignacion || !destinoId}>
-                Reasignar
+              <Button
+                type="submit"
+                disabled={loading || !tipoAsignacion || !destinoId}
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Reasignando...
+                  </>
+                ) : (
+                  "Reasignar"
+                )}
               </Button>
             </DialogFooter>
           </form>
