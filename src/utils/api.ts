@@ -13,7 +13,6 @@ const api = axios.create({
   },
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 api.interceptors.request.use((config: any) => {
   const token = obtenerToken();
   if (token && config.headers) {
@@ -24,7 +23,6 @@ api.interceptors.request.use((config: any) => {
 
 api.interceptors.response.use(
   (response) => response,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async (error: any) => {
     if (error.response?.status === 401) {
       const refresh_token = obtenerRefreshToken();
