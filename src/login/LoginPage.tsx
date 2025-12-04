@@ -35,7 +35,7 @@ const LoginPage = () => {
     try {
       const data = await loginRequest({
         email: formData.email,
-        password: formData.password,
+        contraseña: formData.password,
       });
       login(data.usuario.permisos);
       navigate("/inicio");
