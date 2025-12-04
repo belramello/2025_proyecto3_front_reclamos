@@ -11,27 +11,27 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import type { ReclamoAsignadoDto } from "@/reclamos-asignados/interfaces/reclamo-asignado-dto";
 import { SelectTipoAsignacionDropdown } from "@/components/tipo-asignacion-dropdown";
 import { SelectAreaDropdown } from "@/components/select-area-dropdown";
 import { SelectSubareaDropdown } from "@/components/select-subarea-dropdown";
 import { SelectEmpleadoDropdown } from "@/components/select-empleado-dropdown";
-import { reasignarReclamo } from "@/services/ReclamosService";
 import { ErrorAlert } from "@/components/error-alert";
 import { Loader2 } from "lucide-react";
+import type { ReclamoPendienteAsignarDto } from "./interfaces/reclamo-pendiente-a-asignar.dto";
+import { asignarReclamo } from "@/services/ReclamosService";
 interface ReasignarReclamoDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  reclamo: ReclamoAsignadoDto;
+  reclamo: ReclamoPendienteAsignarDto;
 }
 
-export interface ReasignacionData {
+export interface AsignacionData {
   tipoAsignacion: "area" | "subarea" | "empleado";
   destinoId: string;
   comentario?: string;
 }
 
-const ReasignarReclamoDialog = ({
+const AsignarReclamoDialog = ({
   open,
   onOpenChange,
   reclamo,
@@ -51,7 +51,7 @@ const ReasignarReclamoDialog = ({
     }
     try {
       setLoading(true);
-      await reasignarReclamo(
+      await asignarReclamo(
         reclamo.reclamoId,
         tipoAsignacion,
         destinoId,
@@ -88,7 +88,7 @@ const ReasignarReclamoDialog = ({
           <form onSubmit={handleSubmit}>
             <DialogHeader>
               <DialogTitle>
-                Reasignar Reclamo N° {reclamo.reclamoNroTicket} -{" "}
+                Asignar Reclamo N° {reclamo.reclamoNroTicket} -{" "}
                 {reclamo.reclamoTitulo}
               </DialogTitle>
               <DialogDescription>
@@ -97,9 +97,9 @@ const ReasignarReclamoDialog = ({
               <DialogDescription>
                 Cliente: {reclamo.nombreApellidoCliente}
               </DialogDescription>
-
+              <DialogDescription>Estado: {reclamo.estado}</DialogDescription>
               <DialogDescription>
-                Asignado desde:{" "}
+                Derivado a área desde:{" "}
                 {reclamo.fechaHoraInicioAsignacion.toLocaleDateString()}
               </DialogDescription>
             </DialogHeader>
@@ -118,7 +118,7 @@ const ReasignarReclamoDialog = ({
               {tipoAsignacion && (
                 <div className="grid gap-3">
                   <Label htmlFor="destino">
-                    Seleccione a quién/qué se reasignará el reclamo:
+                    Seleccione a quién/qué se asignará el reclamo:
                   </Label>
                   {tipoAsignacion === "area" && (
                     <SelectAreaDropdown
@@ -138,7 +138,7 @@ const ReasignarReclamoDialog = ({
                     <SelectEmpleadoDropdown
                       value={destinoId}
                       onValueChange={setDestinoId}
-                      tipoUsuario="empleado"
+                      tipoUsuario="encargado"
                     />
                   )}
                 </div>
@@ -174,10 +174,10 @@ const ReasignarReclamoDialog = ({
                 {loading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Reasignando...
+                    Asignando...
                   </>
                 ) : (
-                  "Reasignar"
+                  "Asignar"
                 )}
               </Button>
             </DialogFooter>
@@ -188,4 +188,4 @@ const ReasignarReclamoDialog = ({
   );
 };
 
-export default ReasignarReclamoDialog;
+export default AsignarReclamoDialog;

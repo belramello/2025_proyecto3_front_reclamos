@@ -49,3 +49,35 @@ export const reasignarReclamo = async (
     throw error;
   }
 };
+
+export const asignarReclamo = async (
+  reclamoId: string,
+  tipoAsignacion: "area" | "subarea" | "empleado",
+  destinoId: string,
+  comentario: string | undefined
+): Promise<void> => {
+  try {
+    if (tipoAsignacion === "area") {
+      const response = await api.patch<void>(
+        `/reclamos/asignar-area/${reclamoId}`,
+        { areaId: destinoId, comentario }
+      );
+      return response.data;
+    } else if (tipoAsignacion === "subarea") {
+      const response = await api.patch<void>(
+        `/reclamos/asignar-subarea/${reclamoId}`,
+        { subareaId: destinoId, comentario }
+      );
+      return response.data;
+    } else if (tipoAsignacion === "empleado") {
+      const response = await api.patch<void>(
+        `/reclamos/asignar-empleado/${reclamoId}`,
+        { empleadoId: destinoId, comentario }
+      );
+      return response.data;
+    }
+  } catch (error) {
+    console.error("Error al asignar el reclamo:", error);
+    throw error;
+  }
+};

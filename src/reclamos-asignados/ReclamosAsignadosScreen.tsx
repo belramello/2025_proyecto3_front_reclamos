@@ -2,7 +2,7 @@ import type { ReclamoAsignadoDto } from "./interfaces/reclamo-asignado-dto";
 import { useEffect, useState } from "react";
 import { reclamosAsignadosEjemplo } from "./data/reclamos-asignados.data";
 import { Spinner } from "@/components/ui/spinner";
-import ReclamoCard from "./components/reclamo-asignado-card";
+import ReclamoAsignadaCard from "./components/reclamo-asignado-card";
 import { EmptyReclamosAsignados } from "./components/reclamos-asignados-empty";
 
 function ReclamosAsignadosScreen() {
@@ -30,10 +30,6 @@ function ReclamosAsignadosScreen() {
     }
   };
 
-  const handleReasignar = (reclamoId: string) => {
-    console.log("Reasignar reclamo:", reclamoId);
-  };
-
   const handleResolver = (reclamoId: string) => {
     console.log("Resolver reclamo:", reclamoId);
   };
@@ -53,10 +49,9 @@ function ReclamosAsignadosScreen() {
       </p>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {reclamosAsignados.map((reclamo) => (
-          <ReclamoCard
+          <ReclamoAsignadaCard
             key={reclamo.reclamoId}
             reclamo={reclamo}
-            onReasignar={handleReasignar}
             onResolver={handleResolver}
           />
         ))}

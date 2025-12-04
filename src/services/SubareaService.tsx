@@ -6,7 +6,7 @@ export const obtenerSubareasDeUsuario = async (): Promise<
 > => {
   try {
     const response = await api.get<SubareaDeUsuarioDto[] | null>(
-      `/subareas/subareas-de-empleado`
+      `/subareas/subareas-de-usuario`
     );
     return response.data;
   } catch (error) {

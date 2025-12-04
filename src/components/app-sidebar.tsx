@@ -19,6 +19,11 @@ const items = [
     icon: Home,
   },
   {
+    title: "Mi Area",
+    url: "mi-area",
+    icon: Home,
+  },
+  {
     title: "Mis Reclamos Asignados",
     url: "inicio",
     icon: AtSignIcon,

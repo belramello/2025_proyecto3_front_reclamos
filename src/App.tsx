@@ -5,6 +5,7 @@ import FeedbackPage from "./feedback/FeedbackPage";
 import Layout from "./layout";
 import ReclamosAsignadosScreen from "./reclamos-asignados/ReclamosAsignadosScreen";
 import MiSubareaScreen from "./mi-subarea/MiSubareaScreen";
+import MiAreaScreen from "./mi-area/MiAreaScreen";
 
 function App() {
   return (
@@ -22,10 +23,18 @@ function App() {
         />
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route
-          path="/inicio"
+          path="/reclamos-asignados"
           element={
             <Layout>
               <ReclamosAsignadosScreen />
+            </Layout>
+          }
+        />
+        <Route
+          path="/inicio"
+          element={
+            <Layout>
+              <MiAreaScreen />
             </Layout>
           }
         />

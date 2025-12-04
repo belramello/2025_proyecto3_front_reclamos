@@ -9,7 +9,6 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from "@/components/ui/empty";
-import { useNavigate } from "react-router-dom";
 
 export function EmptyReclamosAsignados() {
   return (

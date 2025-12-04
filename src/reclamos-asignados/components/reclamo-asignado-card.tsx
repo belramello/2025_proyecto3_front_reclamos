@@ -1,4 +1,3 @@
-// ReclamoCard.tsx
 import {
   Card,
   CardAction,
@@ -12,26 +11,15 @@ import { Button } from "@/components/ui/button";
 import TipoAsignacionBadge from "@/components/tipo-asignacion-badge";
 import type { ReclamoAsignadoDto } from "@/reclamos-asignados/interfaces/reclamo-asignado-dto";
 import { useState } from "react";
-import type { ReasignacionData } from "../ReasignacionReclamoDialog";
 import ReasignarReclamoDialog from "../ReasignacionReclamoDialog";
 
 interface ReclamoCardProps {
   reclamo: ReclamoAsignadoDto;
-  onReasignar?: (reclamoId: string, datos: ReasignacionData) => void;
   onResolver?: (reclamoId: string) => void;
 }
 
-const ReclamoCard = ({
-  reclamo,
-  onReasignar,
-  onResolver,
-}: ReclamoCardProps) => {
+const ReclamoAsignadaCard = ({ reclamo, onResolver }: ReclamoCardProps) => {
   const [openReasignar, setOpenReasignar] = useState(false);
-
-  const handleReasignar = (reclamoId: string, datos: ReasignacionData) => {
-    onReasignar?.(reclamoId, datos);
-    setOpenReasignar(false);
-  };
 
   return (
     <>
@@ -77,4 +65,4 @@ const ReclamoCard = ({
   );
 };
 
-export default ReclamoCard;
+export default ReclamoAsignadaCard;
