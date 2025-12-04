@@ -1,17 +1,10 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginRequest } from "../services/ServicioAutenticacion";
-import FormInput from "../components/formulario";
-import ErrorMessage from "../components/mensajeError";
-import "./LoginScreen.css";
-import ActionButton from "../components/boton";
 import { AuthContext } from "../auth/context/contexto";
 
-const LoginPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+export default function LoginPage() {
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const auth = useContext(AuthContext);
@@ -20,9 +13,7 @@ const LoginPage = () => {
   if (!auth) return null;
   const { login } = auth;
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -40,67 +31,84 @@ const LoginPage = () => {
       login(data.usuario.permisos);
       navigate("/inicio");
     } catch {
-      setError("Error de autenticación. Por favor, verifica tus credenciales.");
+      setError("Credenciales incorrectas.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="login-bg d-flex align-items-center justify-content-center vh-100">
-      <div className="card login-card shadow-lg border-0">
-        <div className="card-body p-5 text-center">
-          <h2 className="fw-bold mb-3 ">¡Bienvenido!</h2>
-          <p className="text-muted mb-4">
-            Iniciá sesión para gestionar tus reclamos de manera fácil y rápida.
-          </p>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
+        <h2 className="text-3xl font-semibold text-center mb-1 text-gray-800">
+          Bienvenido
+        </h2>
+        <p className="text-gray-500 text-center mb-6">
+          Iniciá sesión para continuar
+        </p>
 
-          <form onSubmit={handleSubmit}>
-            <FormInput
-              label="Correo electrónico"
-              name="email"
+        <form onSubmit={handleSubmit} className="space-y-5">
+          
+          {/* EMAIL */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Correo electrónico
+            </label>
+            <input
               type="email"
+              name="email"
               value={formData.email}
+              onChange={handleChange}
+              required
               placeholder="ejemplo@correo.com"
-              required
-              onChange={handleChange}
-              className="text-start mb-3"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
             />
-
-            <FormInput
-              label="Contraseña"
-              name="password"
-              type="password"
-              value={formData.password}
-              placeholder="••••••••"
-              required
-              onChange={handleChange}
-              className="text-start mb-3"
-            />
-
-            {error && (
-              <ErrorMessage message={error} onRetry={() => setError(null)} />
-            )}
-
-            <ActionButton
-              label={loading ? "Cargando..." : "Ingresar"}
-              variant="primary"
-              size="lg"
-              className="w-100 rounded-pill mt-3"
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onClick={handleSubmit as any}
-            />
-          </form>
-
-          <div className="mt-4">
-            <a href="/forgot-password" className="text-muted small mb-0">
-              ¿Olvidaste tu contraseña?
-            </a>
           </div>
+
+          {/* PASSWORD */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              required
+              onChange={handleChange}
+              placeholder="••••••••"
+              className="w-full px-4 py-2.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+            />
+          </div>
+
+          {error && (
+            <div className="text-red-600 text-sm text-center mt-1">
+              {error}
+            </div>
+          )}
+
+          {/* BOTÓN */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-2.5 bg-black text-white font-medium rounded-xl 
+                      hover:bg-gray-900 active:scale-[0.98] transition 
+                      disabled:bg-gray-400"
+          >
+            {loading ? "Cargando..." : "Ingresar"}
+          </button>
+
+        </form>
+
+        <div className="mt-5 text-center">
+          <a
+            href="/forgot-password"
+            className="text-sm text-gray-500 hover:text-gray-700 transition"
+          >
+            ¿Olvidaste tu contraseña?
+          </a>
         </div>
       </div>
     </div>
   );
-};
-
-export default LoginPage;
+}
