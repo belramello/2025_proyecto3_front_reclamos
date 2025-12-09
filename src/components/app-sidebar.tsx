@@ -10,30 +10,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-
-// Menu items.
-const items = [
-  {
-    title: "Mi Subárea",
-    url: "mi-subarea",
-    icon: Home,
-  },
-  {
-    title: "Mi Area",
-    url: "mi-area",
-    icon: Home,
-  },
-  {
-    title: "Mis Reclamos Asignados",
-    url: "inicio",
-    icon: AtSignIcon,
-  },
-  {
-    title: "Estadísticas",
-    url: "#",
-    icon: ChartArea,
-  },
-];
+import { PermissionGuard } from "@/guards/permisos-guard";
+import { Permisos } from "@/enums/permisos.enum";
 
 export function AppSidebar() {
   return (
@@ -43,16 +21,61 @@ export function AppSidebar() {
           <SidebarGroupLabel>Gestión de Reclamos</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              <PermissionGuard
+                requiredPermissions={Permisos.AUTO_ASIGNAR_RECLAMO}
+              >
+                <SidebarMenuItem key={"Mi Subárea"}></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"mi-subarea"}>
+                    <Home />
+                    <span>Mi Subárea</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+              </PermissionGuard>
+
+              <PermissionGuard
+                requiredPermissions={[
+                  Permisos.ASIGNAR_RECLAMO_A_EMPLEADO,
+                  Permisos.ASIGNAR_RECLAMOS,
+                ]}
+              >
+                <SidebarMenuItem key={"Mi Área"}></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"mi-area"}>
+                    <Home />
+                    <span>Mi Area</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+              </PermissionGuard>
+
+              <PermissionGuard
+                requiredPermissions={[
+                  Permisos.AUTO_ASIGNAR_RECLAMO,
+                  Permisos.REASIGNAR_RECLAMO_A_SUBAREA_AREA_EMPLEADO,
+                ]}
+              >
+                <SidebarMenuItem
+                  key={"Mis Reclamos Asignados"}
+                ></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"reclamos-asignados"}>
+                    <AtSignIcon />
+                    <span>Mis reclamos Asignados</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+              </PermissionGuard>
+
+              <SidebarMenuItem key={"Estadisticas"}></SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href={"inicio"}>
+                  <ChartArea />
+                  <span>Estadísticas</span>
+                </a>
+              </SidebarMenuButton>
+              <SidebarMenuItem />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

@@ -6,6 +6,8 @@ import Layout from "./layout";
 import ReclamosAsignadosScreen from "./reclamos-asignados/ReclamosAsignadosScreen";
 import MiSubareaScreen from "./mi-subarea/MiSubareaScreen";
 import MiAreaScreen from "./mi-area/MiAreaScreen";
+import EstadisticasScreen from "./estadisticas/EstadisticasScreen";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 function App() {
   return (
@@ -16,26 +18,43 @@ function App() {
         <Route
           path="/mi-subarea"
           element={
-            <Layout>
-              <MiSubareaScreen />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <MiSubareaScreen />
+              </Layout>
+            </ProtectedRoute>
           }
         />
         <Route path="/feedback" element={<FeedbackPage />} />
         <Route
           path="/reclamos-asignados"
           element={
-            <Layout>
-              <ReclamosAsignadosScreen />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <ReclamosAsignadosScreen />
+              </Layout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/inicio"
           element={
-            <Layout>
-              <MiAreaScreen />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <EstadisticasScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/mi-area"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <MiAreaScreen />
+              </Layout>
+            </ProtectedRoute>
           }
         />
       </Routes>

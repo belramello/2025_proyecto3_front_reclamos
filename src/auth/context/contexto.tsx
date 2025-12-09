@@ -32,14 +32,13 @@ const isValidJwt = (token: string | null): boolean => {
 // Estructura del contexto
 export interface AuthContextType {
   isAuth: boolean;
-  permisos: number[] | null;
+  permisos: string[] | null;
   isLoading: boolean;
-  login: (permisos: number[]) => void;
+  login: (permisos: string[]) => void;
   logout: () => void;
 }
 
 // Crear contexto
-// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<AuthContextType | undefined>(
   undefined
 );
@@ -50,7 +49,7 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [isAuth, setIsAuth] = useState(false);
-  const [permisos, setPermisos] = useState<number[] | null>(null);
+  const [permisos, setPermisos] = useState<string[] | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -73,7 +72,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     checkAuth();
   }, []);
 
-  const login = (permisos: number[]) => {
+  const login = (permisos: string[]) => {
     setIsAuth(true);
     setPermisos(permisos);
   };
@@ -94,7 +93,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 };
 
 // Hook personalizado para usar el contexto fácilmente
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
   if (!context) throw new Error("useAuth debe usarse dentro de AuthProvider");

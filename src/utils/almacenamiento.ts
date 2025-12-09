@@ -26,13 +26,13 @@ export const obtenerToken = (): string | null => {
   }
 };
 
-export const obtenerPermisos = (): number[] | null => {
+export const obtenerPermisos = (): string[] | null => {
   try {
     const raw = localStorage.getItem("permisos");
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed) && parsed.every((v) => typeof v === "number")) {
-      return parsed as number[];
+    if (Array.isArray(parsed) && parsed.every((v) => typeof v === "string")) {
+      return parsed as string[];
     }
     return null;
   } catch (error) {
