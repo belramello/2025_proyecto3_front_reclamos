@@ -1,5 +1,6 @@
 import type { ReclamoAsignadoDto } from "@/reclamos-asignados/interfaces/reclamo-asignado-dto";
 import api from "../utils/api";
+import type { HistorialReclamo } from "@/interfaces/respuesta-historial-reclamo.dto";
 
 export const obtenerReclamosAsignadosDeEmpleado = async (): Promise<
   ReclamoAsignadoDto[] | null
@@ -48,6 +49,15 @@ export const reasignarReclamo = async (
     console.error("Error al reasignar el reclamo:", error);
     throw error;
   }
+};
+
+export const obtenerHistorialReclamo = async (
+  reclamoId: string
+): Promise<HistorialReclamo> => {
+  const response = await api.get<HistorialReclamo>(
+    `/reclamos/historial/${reclamoId}`
+  );
+  return response.data;
 };
 
 export const asignarReclamo = async (
