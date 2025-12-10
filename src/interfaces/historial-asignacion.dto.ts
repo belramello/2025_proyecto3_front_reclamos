@@ -12,6 +12,6 @@ export interface HistorialAsignacion {
   haciaEmpleado?: EmpleadoDto | null;
   tipoAsignacion: string;
   comentario?: string | null;
-  fechaAsignacion: Date;
-  fechaHoraFin?: Date | null;
+  fechaAsignacion: string;
+  fechaHoraFin?: string | null;
 }

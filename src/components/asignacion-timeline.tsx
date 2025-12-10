@@ -2,6 +2,7 @@ import type { HistorialAsignacion } from "@/interfaces/historial-asignacion.dto"
 import { Card, CardContent } from "./ui/card";
 import { Clock, MessagesSquare, Users } from "lucide-react";
 import { TipoAsignacion } from "@/enums/tipo-asignacion.enum";
+import { formatearFechaArg } from "@/utils/formatear-fecha";
 
 export const AsignacionesTimelineVertical = ({
   historialAsignaciones,
@@ -140,9 +141,7 @@ export const AsignacionesTimelineVertical = ({
                     <div className="flex items-center gap-2 mt-3 text-xs text-gray-500">
                       <Clock className="w-3 h-3" />
                       <span>
-                        {new Date(asignacion.fechaAsignacion).toLocaleString(
-                          "es-AR"
-                        )}
+                        {formatearFechaArg(asignacion.fechaAsignacion)}
                       </span>
                     </div>
                   </CardContent>

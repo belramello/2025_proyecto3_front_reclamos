@@ -11,47 +11,23 @@ import { Button } from "@/components/ui/button";
 import TipoAsignacionBadge from "@/components/tipo-asignacion-badge";
 import { useState } from "react";
 import AsignarReclamoDialog from "../AsignacionReclamoDialog";
-import type { ReclamoPendienteAsignarDto } from "../interfaces/reclamo-pendiente-a-asignar.dto";
+import type { ReclamoEnMovimientoDto } from "../interfaces/reclamo-en-movimiento.dto";
 import { AlertCircleIcon } from "lucide-react";
-import { Prioridad } from "@/enums/prioridad.enum";
 import ReclamoDetalleDialog from "../ReclamoHistorialDialog";
 import TipoPrioridadBadge from "@/components/prioridad-badge";
+import { getPriorityStyles } from "@/utils/get-priority-styles";
+import { formatearFechaArg } from "@/utils/formatear-fecha";
 
 interface ReclamoCardProps {
-  reclamo: ReclamoPendienteAsignarDto;
+  reclamo: ReclamoEnMovimientoDto;
 }
 
 const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
   const [openAsignar, setOpenAsignar] = useState(false);
   const [openDetalle, setOpenDetalle] = useState(false);
-
-  const getPriorityStyles = () => {
-    switch (reclamo.prioridad) {
-      case Prioridad.ALTO:
-        return {
-          titleColor: "text-red-700",
-          border: "border-3 border-red-700",
-          icon: true,
-          buttonColor: "bg-red-900 hover:bg-red-800",
-        };
-      case Prioridad.MEDIO:
-        return {
-          titleColor: "text-yellow-600",
-          border: "border-3 border-yellow-600",
-          icon: false,
-          buttonColor: "bg-yellow-600 hover:bg-yellow-500",
-        };
-      default:
-        return {
-          titleColor: "text-black",
-          border: "border border-gray-300",
-          icon: false,
-          buttonColor: "bg-green-950 hover:bg-green-900",
-        };
-    }
-  };
-
-  const { titleColor, border, icon, buttonColor } = getPriorityStyles();
+  const { titleColor, border, icon, buttonColor } = getPriorityStyles(
+    reclamo.prioridad
+  );
 
   return (
     <>
@@ -79,7 +55,7 @@ const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
           <p className="mt-0.5">Cliente: {reclamo.nombreApellidoCliente}</p>
           <p className="mt-0.5">
             Derivado a área desde:{" "}
-            {reclamo.fechaHoraInicioAsignacion.toLocaleDateString()}
+            {formatearFechaArg(reclamo.fechaHoraInicioAsignacion)}
           </p>
           <p className="mt-0.5">Estado: {reclamo.estado}</p>
           <p className="mt-0.5">

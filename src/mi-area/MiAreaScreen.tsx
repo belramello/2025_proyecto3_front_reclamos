@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import type { ReclamoPendienteAsignarDto } from "./interfaces/reclamo-pendiente-a-asignar.dto";
+import type { ReclamoEnMovimientoDto } from "./interfaces/reclamo-en-movimiento.dto";
 import { EmptyReclamosPendientes } from "./components/reclamos-pendientes-empty";
 import { reclamosPendienteAAsignarEjemplo } from "./data/reclamos-asignados.data";
 import ReclamoPendienteCard from "./components/reclamo-pendiente-card";
 
 function MiAreaScreen() {
   const [reclamosPendientesAAsignar, setReclamosPendientesAAsginar] = useState<
-    ReclamoPendienteAsignarDto[]
+    ReclamoEnMovimientoDto[]
   >([]);
   const [loading, setLoading] = useState(false);
 
