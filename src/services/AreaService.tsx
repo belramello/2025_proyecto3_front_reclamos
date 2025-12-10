@@ -1,5 +1,5 @@
 import api from "../utils/api";
-import type { AreaDto } from "@/interfaces/find-all-area-response.dto";
+import type { AreaDto } from "@/interfaces/area-dto";
 
 export const obtenerAreas = async (): Promise<AreaDto[] | null> => {
   try {

@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { AreaDto } from "@/interfaces/find-all-area-response.dto";
+import type { AreaDto } from "@/interfaces/area-dto";
 import { obtenerAreas } from "@/services/AreaService";
 import { useEffect, useState } from "react";
 

@@ -14,6 +14,8 @@ import AsignarReclamoDialog from "../AsignacionReclamoDialog";
 import type { ReclamoPendienteAsignarDto } from "../interfaces/reclamo-pendiente-a-asignar.dto";
 import { AlertCircleIcon } from "lucide-react";
 import { Prioridad } from "@/enums/prioridad.enum";
+import ReclamoDetalleDialog from "../ReclamoHistorialDialog";
+import TipoPrioridadBadge from "@/components/prioridad-badge";
 
 interface ReclamoCardProps {
   reclamo: ReclamoPendienteAsignarDto;
@@ -21,6 +23,7 @@ interface ReclamoCardProps {
 
 const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
   const [openAsignar, setOpenAsignar] = useState(false);
+  const [openDetalle, setOpenDetalle] = useState(false);
 
   const getPriorityStyles = () => {
     switch (reclamo.prioridad) {
@@ -55,15 +58,15 @@ const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
       <Card className={`w-96 ${border}`}>
         <CardHeader>
           <CardTitle>
-            <a
-              href={`/reclamo/${reclamo.reclamoId}`}
-              className="flex items-center gap-2"
+            <button
+              onClick={() => setOpenDetalle(true)}
+              className="flex items-center gap-2 hover:underline cursor-pointer text-left w-full"
             >
               {icon && <AlertCircleIcon className="text-red-700" />}
               <span className={titleColor}>
                 Reclamo N° {reclamo.reclamoNroTicket}
               </span>
-            </a>
+            </button>
           </CardTitle>
           <CardDescription>{reclamo.reclamoTitulo}</CardDescription>
           <CardAction>
@@ -72,15 +75,19 @@ const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
         </CardHeader>
 
         <CardContent>
-          <p>Proyecto: {reclamo.nombreProyecto}</p>
-          <p>Cliente: {reclamo.nombreApellidoCliente}</p>
-          <p>
+          <p className="mt-0.5">Proyecto: {reclamo.nombreProyecto}</p>
+          <p className="mt-0.5">Cliente: {reclamo.nombreApellidoCliente}</p>
+          <p className="mt-0.5">
             Derivado a área desde:{" "}
             {reclamo.fechaHoraInicioAsignacion.toLocaleDateString()}
           </p>
-          <p>Estado: {reclamo.estado}</p>
-          <p>Prioridad: {reclamo.prioridad}</p>
-          <p>Nivel de Criticidad: {reclamo.nivelCriticidad}</p>
+          <p className="mt-0.5">Estado: {reclamo.estado}</p>
+          <p className="mt-0.5">
+            Prioridad: <TipoPrioridadBadge tipoPrioridad={reclamo.prioridad} />
+          </p>
+          <p className="mt-0.5">
+            Nivel de Criticidad: {reclamo.nivelCriticidad}
+          </p>
         </CardContent>
 
         <CardFooter className="flex justify-center gap-2">
@@ -95,8 +102,15 @@ const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
         onOpenChange={setOpenAsignar}
         reclamo={reclamo}
       />
+
+      <ReclamoDetalleDialog
+        open={openDetalle}
+        onOpenChange={setOpenDetalle}
+        reclamoId={reclamo.reclamoId}
+        reclamoNroTicket={reclamo.reclamoNroTicket}
+        reclamoTitulo={reclamo.reclamoTitulo}
+      />
     </>
   );
 };
-
 export default ReclamoPendienteCard;

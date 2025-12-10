@@ -1,4 +1,4 @@
-export interface AreaDto {
+export interface SubareaDto {
   id: string;
   nombre: string;
 }

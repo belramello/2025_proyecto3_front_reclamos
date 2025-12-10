@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import type { ReclamoPendienteAsignarDto } from "./interfaces/reclamo-pendiente-a-asignar.dto";
-import ReclamoCard from "@/reclamos-asignados/components/reclamo-asignado-card";
 import { EmptyReclamosPendientes } from "./components/reclamos-pendientes-empty";
 import { reclamosPendienteAAsignarEjemplo } from "./data/reclamos-asignados.data";
 import ReclamoPendienteCard from "./components/reclamo-pendiente-card";

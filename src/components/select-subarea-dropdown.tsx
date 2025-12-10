@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { SubareaDeUsuarioDto } from "@/interfaces/find-all-subarea-de-empleado.dto";
+import type { SubareaDeUsuarioDto } from "@/interfaces/subarea.dto";
 import { obtenerSubareasDeUsuario } from "@/services/SubareaService";
 import { useEffect, useState } from "react";
 

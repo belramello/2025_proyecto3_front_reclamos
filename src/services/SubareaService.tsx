@@ -1,11 +1,11 @@
-import type { SubareaDeUsuarioDto } from "@/interfaces/find-all-subarea-de-empleado.dto";
+import type { SubareaDto } from "@/interfaces/subarea.dto";
 import api from "../utils/api";
 
 export const obtenerSubareasDeUsuario = async (): Promise<
-  SubareaDeUsuarioDto[] | null
+  SubareaDto[] | null
 > => {
   try {
-    const response = await api.get<SubareaDeUsuarioDto[] | null>(
+    const response = await api.get<SubareaDto[] | null>(
       `/subareas/subareas-de-usuario`
     );
     return response.data;
