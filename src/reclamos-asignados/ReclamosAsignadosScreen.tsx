@@ -1,28 +1,32 @@
-import type { ReclamoAsignadoDto } from "./interfaces/reclamo-asignado-dto";
 import { useEffect, useState } from "react";
-import { reclamosAsignadosEjemplo } from "./data/reclamos-asignados.data";
 import { Spinner } from "@/components/ui/spinner";
 import ReclamoAsignadaCard from "./components/reclamo-asignado-card";
 import { EmptyReclamosAsignados } from "./components/reclamos-asignados-empty";
+import type { ReclamoEnMovimientoDto } from "@/mi-area/interfaces/reclamo-en-movimiento.dto";
+import { obtenerReclamosAsignadosDeEmpleado } from "@/services/ReclamosService";
 
 function ReclamosAsignadosScreen() {
   const [reclamosAsignados, setReclamosAsignados] = useState<
-    ReclamoAsignadoDto[]
+    ReclamoEnMovimientoDto[]
   >([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getReclamosAsignados();
+    const handleFocus = () => {
+      getReclamosAsignados();
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+    };
   }, []);
 
   const getReclamosAsignados = async () => {
     setLoading(true);
     try {
-      // TODO: Descomentar cuando el backend esté listo
-      // const data = await obtenerReclamosAsignadosDeEmpleado();
-      // setReclamosAsignados(data || []);
-      // Simulación con data de ejemplo
-      setReclamosAsignados(reclamosAsignadosEjemplo);
+      const data = await obtenerReclamosAsignadosDeEmpleado();
+      setReclamosAsignados(data || []);
     } catch (error) {
       console.error("Error al obtener los reclamos asignados:", error);
     } finally {
@@ -52,6 +56,7 @@ function ReclamosAsignadosScreen() {
           <ReclamoAsignadaCard
             key={reclamo.reclamoId}
             reclamo={reclamo}
+            onDialogClose={getReclamosAsignados}
             onResolver={handleResolver}
           />
         ))}

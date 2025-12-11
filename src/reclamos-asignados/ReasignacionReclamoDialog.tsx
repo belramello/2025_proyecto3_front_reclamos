@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import type { ReclamoAsignadoDto } from "@/reclamos-asignados/interfaces/reclamo-asignado-dto";
 import { SelectTipoAsignacionDropdown } from "@/components/tipo-asignacion-dropdown";
 import { SelectAreaDropdown } from "@/components/select-area-dropdown";
 import { SelectSubareaDropdown } from "@/components/select-subarea-dropdown";
@@ -19,10 +18,11 @@ import { SelectEmpleadoDropdown } from "@/components/select-empleado-dropdown";
 import { reasignarReclamo } from "@/services/ReclamosService";
 import { ErrorAlert } from "@/components/error-alert";
 import { Loader2 } from "lucide-react";
+import type { ReclamoEnMovimientoDto } from "@/mi-area/interfaces/reclamo-en-movimiento.dto";
 interface ReasignarReclamoDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  reclamo: ReclamoAsignadoDto;
+  reclamo: ReclamoEnMovimientoDto;
 }
 
 export interface ReasignacionData {
@@ -99,8 +99,7 @@ const ReasignarReclamoDialog = ({
               </DialogDescription>
 
               <DialogDescription>
-                Asignado desde:{" "}
-                {reclamo.fechaHoraInicioAsignacion.toLocaleDateString()}
+                Asignado desde: {reclamo.fechaHoraInicioAsignacion}
               </DialogDescription>
             </DialogHeader>
 

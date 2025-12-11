@@ -1,13 +1,30 @@
-import type { ReclamoAsignadoDto } from "@/reclamos-asignados/interfaces/reclamo-asignado-dto";
+import type { ReclamoEnMovimientoDto } from "@/mi-area/interfaces/reclamo-en-movimiento.dto";
 import api from "../utils/api";
 import type { HistorialReclamo } from "@/interfaces/respuesta-historial-reclamo.dto";
 
 export const obtenerReclamosAsignadosDeEmpleado = async (): Promise<
-  ReclamoAsignadoDto[] | null
+  ReclamoEnMovimientoDto[]
 > => {
   try {
-    const response = await api.get<ReclamoAsignadoDto[] | null>(
-      `/consultar-reclamos-asignados`
+    const response = await api.get<ReclamoEnMovimientoDto[]>(
+      `/reclamos/consultar-reclamos-asignados`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener los reclamos asignados del usuario:",
+      error
+    );
+    throw error;
+  }
+};
+
+export const obtenerReclamosAsignadosAUnArea = async (): Promise<
+  ReclamoEnMovimientoDto[]
+> => {
+  try {
+    const response = await api.get<ReclamoEnMovimientoDto[]>(
+      `/reclamos/reclamos-area`
     );
     return response.data;
   } catch (error) {

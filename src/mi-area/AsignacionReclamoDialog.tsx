@@ -17,12 +17,13 @@ import { SelectSubareaDropdown } from "@/components/select-subarea-dropdown";
 import { SelectEmpleadoDropdown } from "@/components/select-empleado-dropdown";
 import { ErrorAlert } from "@/components/error-alert";
 import { Loader2 } from "lucide-react";
-import type { ReclamoPendienteAsignarDto } from "./interfaces/reclamo-pendiente-a-asignar.dto";
+import type { ReclamoEnMovimientoDto } from "./interfaces/reclamo-en-movimiento.dto";
 import { asignarReclamo } from "@/services/ReclamosService";
+import { formatearFechaArg } from "@/utils/formatear-fecha";
 interface ReasignarReclamoDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  reclamo: ReclamoPendienteAsignarDto;
+  reclamo: ReclamoEnMovimientoDto;
 }
 
 export interface AsignacionData {
@@ -97,10 +98,12 @@ const AsignarReclamoDialog = ({
               <DialogDescription>
                 Cliente: {reclamo.nombreApellidoCliente}
               </DialogDescription>
-              <DialogDescription>Estado: {reclamo.estado}</DialogDescription>
+              <DialogDescription>
+                Estado: {reclamo.nombreEstado}
+              </DialogDescription>
               <DialogDescription>
                 Derivado a área desde:{" "}
-                {reclamo.fechaHoraInicioAsignacion.toLocaleDateString()}
+                {formatearFechaArg(reclamo.fechaHoraInicioAsignacion)}
               </DialogDescription>
             </DialogHeader>
 

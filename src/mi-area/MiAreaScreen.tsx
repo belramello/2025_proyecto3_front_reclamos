@@ -1,28 +1,32 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import type { ReclamoPendienteAsignarDto } from "./interfaces/reclamo-pendiente-a-asignar.dto";
+import type { ReclamoEnMovimientoDto } from "./interfaces/reclamo-en-movimiento.dto";
 import { EmptyReclamosPendientes } from "./components/reclamos-pendientes-empty";
-import { reclamosPendienteAAsignarEjemplo } from "./data/reclamos-asignados.data";
 import ReclamoPendienteCard from "./components/reclamo-pendiente-card";
+import { obtenerReclamosAsignadosAUnArea } from "@/services/ReclamosService";
 
 function MiAreaScreen() {
   const [reclamosPendientesAAsignar, setReclamosPendientesAAsginar] = useState<
-    ReclamoPendienteAsignarDto[]
+    ReclamoEnMovimientoDto[]
   >([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getReclamosPendientesAAsignar();
+    const handleFocus = () => {
+      getReclamosPendientesAAsignar();
+    };
+    window.addEventListener("focus", handleFocus);
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+    };
   }, []);
 
   const getReclamosPendientesAAsignar = async () => {
     setLoading(true);
     try {
-      // TODO: Descomentar cuando el backend esté listo
-      // const data = await obtenerReclamosAsignadosDeEmpleado();
-      // setReclamosAsignados(data || []);
-      // Simulación con data de ejemplo
-      setReclamosPendientesAAsginar(reclamosPendienteAAsignarEjemplo);
+      const data = await obtenerReclamosAsignadosAUnArea();
+      setReclamosPendientesAAsginar(data || []);
     } catch (error) {
       console.error("Error al obtener los reclamos asignados:", error);
     } finally {
@@ -45,7 +49,11 @@ function MiAreaScreen() {
       </p>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {reclamosPendientesAAsignar.map((reclamo) => (
-          <ReclamoPendienteCard key={reclamo.reclamoId} reclamo={reclamo} />
+          <ReclamoPendienteCard
+            key={reclamo.reclamoId}
+            reclamo={reclamo}
+            onDialogClose={getReclamosPendientesAAsignar}
+          />
         ))}
       </div>
       {reclamosPendientesAAsignar.length === 0 && !loading && (
