@@ -1,5 +1,8 @@
 import type { EmpleadoDeSubareaDeLogueadoDto } from "@/interfaces/find-all-empleado-de-subarea-de-logueado.dto";
 import api from "../utils/api";
+import type { LoginResponseDto } from "@/interfaces/login-response.dto";
+import type { CreateUsuarioDto } from "@/interfaces/create-usuario.dto";
+import type { ActivarCuentaDto } from "@/interfaces/activar-cuenta.dto";
 
 export const obtenerEmpleados = async (
   tipoUsuario: "empleado" | "encargado"
