@@ -1,4 +1,4 @@
-import { AtSignIcon, ChartArea, Home } from "lucide-react";
+import { AtSignIcon, ChartArea, Home, UserPlus } from "lucide-react";
 
 import {
   Sidebar,
@@ -76,6 +76,17 @@ export function AppSidebar() {
                 </a>
               </SidebarMenuButton>
               <SidebarMenuItem />
+              <PermissionGuard requiredPermissions={[Permisos.CREAR_USUARIOS]}>
+              <SidebarMenuItem key={"Registrar Usuario"}></SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href={"registrar-usuario"}>
+                  <UserPlus /> 
+                  <span>Registrar Usuario</span>
+                </a>
+              </SidebarMenuButton>
+              <SidebarMenuItem />
+            </PermissionGuard>
+
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
