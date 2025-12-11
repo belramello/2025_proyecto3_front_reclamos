@@ -12,6 +12,7 @@ function ReclamosAsignadosScreen() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    getReclamosAsignados();
     const handleFocus = () => {
       getReclamosAsignados();
     };
@@ -55,6 +56,7 @@ function ReclamosAsignadosScreen() {
           <ReclamoAsignadaCard
             key={reclamo.reclamoId}
             reclamo={reclamo}
+            onDialogClose={getReclamosAsignados}
             onResolver={handleResolver}
           />
         ))}

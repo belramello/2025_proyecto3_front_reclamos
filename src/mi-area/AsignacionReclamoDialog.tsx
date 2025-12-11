@@ -98,7 +98,9 @@ const AsignarReclamoDialog = ({
               <DialogDescription>
                 Cliente: {reclamo.nombreApellidoCliente}
               </DialogDescription>
-              <DialogDescription>Estado: {reclamo.estado}</DialogDescription>
+              <DialogDescription>
+                Estado: {reclamo.nombreEstado}
+              </DialogDescription>
               <DialogDescription>
                 Derivado a área desde:{" "}
                 {formatearFechaArg(reclamo.fechaHoraInicioAsignacion)}

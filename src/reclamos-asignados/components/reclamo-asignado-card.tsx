@@ -20,10 +20,15 @@ import { formatearFechaArg } from "@/utils/formatear-fecha";
 
 interface ReclamoCardProps {
   reclamo: ReclamoEnMovimientoDto;
+  onDialogClose: () => void;
   onResolver?: (reclamoId: string) => void;
 }
 
-const ReclamoAsignadaCard = ({ reclamo, onResolver }: ReclamoCardProps) => {
+const ReclamoAsignadaCard = ({
+  reclamo,
+  onDialogClose,
+  onResolver,
+}: ReclamoCardProps) => {
   const [openReasignar, setOpenReasignar] = useState(false);
   const [openDetalle, setOpenDetalle] = useState(false);
   const { titleColor, border, icon, buttonColor } = getPriorityStyles(
@@ -80,12 +85,22 @@ const ReclamoAsignadaCard = ({ reclamo, onResolver }: ReclamoCardProps) => {
 
       <ReasignarReclamoDialog
         open={openReasignar}
-        onOpenChange={setOpenReasignar}
+        onOpenChange={(open) => {
+          setOpenReasignar(open);
+          if (!open) {
+            onDialogClose();
+          }
+        }}
         reclamo={reclamo}
       />
       <ReclamoDetalleDialog
         open={openDetalle}
-        onOpenChange={setOpenDetalle}
+        onOpenChange={(open) => {
+          setOpenDetalle(open);
+          if (!open) {
+            onDialogClose();
+          }
+        }}
         reclamoId={reclamo.reclamoId}
         reclamoNroTicket={reclamo.reclamoNroTicket}
         reclamoTitulo={reclamo.reclamoTitulo}

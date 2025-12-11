@@ -11,6 +11,6 @@ export interface ReclamoEnMovimientoDto {
   fechaHoraInicioAsignacion: string;
   nivelCriticidad: number;
   prioridad: Prioridad;
-  estado: Estado;
+  nombreEstado: Estado;
   tipoAsignacion: TipoAsignacion;
 }

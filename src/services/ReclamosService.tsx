@@ -19,6 +19,23 @@ export const obtenerReclamosAsignadosDeEmpleado = async (): Promise<
   }
 };
 
+export const obtenerReclamosAsignadosAUnArea = async (): Promise<
+  ReclamoEnMovimientoDto[]
+> => {
+  try {
+    const response = await api.get<ReclamoEnMovimientoDto[]>(
+      `/reclamos/reclamos-area`
+    );
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error al obtener los reclamos asignados del usuario:",
+      error
+    );
+    throw error;
+  }
+};
+
 export const reasignarReclamo = async (
   reclamoId: string,
   tipoAsignacion: "area" | "subarea" | "empleado",

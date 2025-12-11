@@ -20,9 +20,10 @@ import { formatearFechaArg } from "@/utils/formatear-fecha";
 
 interface ReclamoCardProps {
   reclamo: ReclamoEnMovimientoDto;
+  onDialogClose: () => void;
 }
 
-const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
+const ReclamoPendienteCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
   const [openAsignar, setOpenAsignar] = useState(false);
   const [openDetalle, setOpenDetalle] = useState(false);
   const { titleColor, border, icon, buttonColor } = getPriorityStyles(
@@ -57,7 +58,7 @@ const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
             Derivado a área desde:{" "}
             {formatearFechaArg(reclamo.fechaHoraInicioAsignacion)}
           </p>
-          <p className="mt-0.5">Estado: {reclamo.estado}</p>
+          <p className="mt-0.5">Estado: {reclamo.nombreEstado}</p>
           <p className="mt-0.5">
             Prioridad: <TipoPrioridadBadge tipoPrioridad={reclamo.prioridad} />
           </p>
@@ -75,13 +76,23 @@ const ReclamoPendienteCard = ({ reclamo }: ReclamoCardProps) => {
 
       <AsignarReclamoDialog
         open={openAsignar}
-        onOpenChange={setOpenAsignar}
+        onOpenChange={(open) => {
+          setOpenAsignar(open);
+          if (!open) {
+            onDialogClose();
+          }
+        }}
         reclamo={reclamo}
       />
 
       <ReclamoDetalleDialog
         open={openDetalle}
-        onOpenChange={setOpenDetalle}
+        onOpenChange={(open) => {
+          setOpenDetalle(open);
+          if (!open) {
+            onDialogClose();
+          }
+        }}
         reclamoId={reclamo.reclamoId}
         reclamoNroTicket={reclamo.reclamoNroTicket}
         reclamoTitulo={reclamo.reclamoTitulo}

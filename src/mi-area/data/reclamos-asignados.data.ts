@@ -13,7 +13,7 @@ export const reclamosPendienteAAsignarEjemplo: ReclamoEnMovimientoDto[] = [
     fechaHoraInicioAsignacion: "2025-12-10T23:00:35.816Z",
     nivelCriticidad: 5,
     prioridad: Prioridad.MEDIO,
-    estado: Estado.PENDIENTE_A_ASIGNAR,
+    nombreEstado: Estado.PENDIENTE_A_ASIGNAR,
     tipoAsignacion: TipoAsignacion.INICIAL,
   },
   {
@@ -25,7 +25,7 @@ export const reclamosPendienteAAsignarEjemplo: ReclamoEnMovimientoDto[] = [
     fechaHoraInicioAsignacion: "2025-12-10T23:00:35.816Z",
     nivelCriticidad: 10,
     prioridad: Prioridad.ALTO,
-    estado: Estado.EN_PROCESO,
+    nombreEstado: Estado.EN_PROCESO,
     tipoAsignacion: TipoAsignacion.DE_AREA_A_AREA,
   },
   {
@@ -37,7 +37,7 @@ export const reclamosPendienteAAsignarEjemplo: ReclamoEnMovimientoDto[] = [
     fechaHoraInicioAsignacion: "2025-12-10T23:00:35.816Z",
     nivelCriticidad: 1,
     prioridad: Prioridad.BAJO,
-    estado: Estado.EN_PROCESO,
+    nombreEstado: Estado.EN_PROCESO,
     tipoAsignacion: TipoAsignacion.DE_EMPLEADO_A_AREA,
   },
 ];
