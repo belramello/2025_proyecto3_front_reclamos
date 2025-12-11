@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import { crearUsuario} from "@/services/UsuariosService";
+import { registrarUsuario } from "@/services/UsuariosService";
 import { obtenerAreas } from "@/services/AreaService";
 import { obtenerRoles } from "@/services/RolesService";
 import { obtenerSubareasDeUsuario } from "@/services/SubareaService";
@@ -38,9 +38,10 @@ export default function RegistroUsuarioPage() {
         obtenerAreas(),
         obtenerSubareasDeUsuario(),
       ]);
-      setRoles(rolesRes);
-      setAreas(areasRes);
-      setSubareas(subareasRes);
+        setRoles(rolesRes ?? []);
+        setAreas(areasRes ?? []);
+        setSubareas(subareasRes ?? []);
+
     } catch (error) {
       console.error("Error cargando datos iniciales:", error);
     } finally {
@@ -58,7 +59,7 @@ export default function RegistroUsuarioPage() {
     setMessage(null);
 
     try {
-      await crearUsuario({
+      await registrarUsuario({
         ...formData,
         contraseña: formData.contraseña || undefined,
         area: formData.area || undefined,
