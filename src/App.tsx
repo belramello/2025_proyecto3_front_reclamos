@@ -8,6 +8,7 @@ import MiSubareaScreen from "./mi-subarea/MiSubareaScreen";
 import MiAreaScreen from "./mi-area/MiAreaScreen";
 import EstadisticasScreen from "./estadisticas/EstadisticasScreen";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import RegistroUsuarioPage from "./registro/RegistrarScreen";
 
 function App() {
   return (
@@ -21,6 +22,16 @@ function App() {
             <ProtectedRoute>
               <Layout>
                 <MiSubareaScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/registrar-usuario"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <RegistroUsuarioPage />
               </Layout>
             </ProtectedRoute>
           }
