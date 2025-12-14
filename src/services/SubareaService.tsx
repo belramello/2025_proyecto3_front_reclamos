@@ -17,3 +17,13 @@ export const obtenerSubareasDeUsuario = async (): Promise<
     throw error;
   }
 };
+
+export const obtenerTodasLasSubareas = async (id: string): Promise<SubareaDto[]> => {
+  try {
+    const response = await api.get<SubareaDto[]>(`/subareas/area/${id}`); 
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener todas las subáreas por área", error); // Mensaje de error más específico
+    throw error;
+  }
+}
