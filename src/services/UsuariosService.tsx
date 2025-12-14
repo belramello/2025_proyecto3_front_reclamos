@@ -33,7 +33,7 @@ export const registrarUsuario = async (
   data: CreateUsuarioDto
 ): Promise<LoginResponseDto> => {
   try {
-    const response = await api.post<LoginResponseDto>("/auth/register", data);
+    const response = await api.post<LoginResponseDto>("/usuarios/registrar-cliente", data);
     return response.data;
   } catch (error: any) {
     console.error("Error al registrar usuario", error);
@@ -43,6 +43,18 @@ export const registrarUsuario = async (
       throw new Error("El correo electrónico ya está registrado.");
     }
 
+    throw error;
+  }
+};
+
+export const registrarEmpleado = async (
+  data: CreateUsuarioDto
+): Promise<LoginResponseDto> => {
+  try {
+    const response = await api.post<LoginResponseDto>("/usuarios/gestion-empleados", data);
+    return response.data;
+  } catch (error) {
+    console.error("Error al registrar empleado", error);
     throw error;
   }
 };

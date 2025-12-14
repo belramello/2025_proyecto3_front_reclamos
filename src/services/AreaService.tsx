@@ -11,6 +11,16 @@ export const obtenerAreas = async (): Promise<AreaDto[] | null> => {
   }
 };
 
+export const obtenerTodasLasAreas = async (): Promise<AreaDto[] | null> => {
+  try {
+    const response = await api.get<AreaDto[] | null>(`/areas`);
+    return response.data;
+  } catch (error) {
+    console.error("Error las áreas", error);
+    throw error;
+  }
+};
+
 export const crearArea = async (data: {
   nombre: string;
   subareas?: string[];

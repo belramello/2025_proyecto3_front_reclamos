@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import { registrarUsuario } from "@/services/UsuariosService";
+import { registrarEmpleado, registrarUsuario } from "@/services/UsuariosService";
 import { obtenerAreas } from "@/services/AreaService";
 import { obtenerRoles } from "@/services/RolesService";
-import { obtenerSubareasDeUsuario } from "@/services/SubareaService";
+import { obtenerTodasLasSubareas } from "@/services/SubareaService";
 
 export default function RegistroUsuarioPage() {
   const [formData, setFormData] = useState({
@@ -23,6 +23,7 @@ export default function RegistroUsuarioPage() {
   const [areas, setAreas] = useState<any[]>([]);
   const [subareas, setSubareas] = useState<any[]>([]);
 
+  const [loadingSubareas, setLoadingSubareas] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingInitial, setLoadingInitial] = useState(true);
   const [message, setMessage] = useState<string | null>(null);
@@ -33,15 +34,13 @@ export default function RegistroUsuarioPage() {
 
   const cargarDatosIniciales = async () => {
     try {
-      const [rolesRes, areasRes, subareasRes] = await Promise.all([
+      const [rolesRes, areasRes] = await Promise.all([
         obtenerRoles(),
         obtenerAreas(),
-        obtenerSubareasDeUsuario(),
       ]);
         setRoles(rolesRes ?? []);
         setAreas(areasRes ?? []);
-        setSubareas(subareasRes ?? []);
-
+        setSubareas([]); 
     } catch (error) {
       console.error("Error cargando datos iniciales:", error);
     } finally {
@@ -49,50 +48,82 @@ export default function RegistroUsuarioPage() {
     }
   };
 
+  const cargarSubareasPorArea = async (areaId: string) => {
+    if (!areaId) {
+      setSubareas([]);
+      return;
+    }
+    setLoadingSubareas(true);
+    try {
+      const subareasRes = await obtenerTodasLasSubareas(areaId);
+      setSubareas(subareasRes ?? []);
+    } catch (error) {
+      console.error("Error cargando subáreas por área:", error);
+      setSubareas([]); 
+    } finally {
+      setLoadingSubareas(false);
+    }
+  };
+  
   const handleChange = (e: any) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "area") {
+      cargarSubareasPorArea(value);
+      setFormData((prev) => ({ ...prev, subarea: "" })); 
+    }
   };
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setLoading(true);
-    setMessage(null);
+  e.preventDefault();
+  setLoading(true);
+  setMessage(null);
 
-    try {
-      await registrarUsuario({
-        ...formData,
-        contraseña: formData.contraseña || undefined,
-        area: formData.area || undefined,
-        subarea: formData.subarea || undefined,
-      });
+  try {
+    const payload = {
+      ...formData,
+      contraseña: formData.contraseña || undefined,
+      area: formData.area || undefined,
+      subarea: formData.subarea || undefined,
+    };
 
-      setMessage("Usuario registrado correctamente.");
-
-      // Reset form
-      setFormData({
-        nombreUsuario: "",
-        email: "",
-        contraseña: "",
-        rol: "",
-        nombre: "",
-        apellido: "",
-        direccion: "",
-        telefono: "",
-        area: "",
-        subarea: "",
-      });
-    } catch (error: any) {
-      setMessage(error.response?.data?.message || "Error al registrar usuario.");
-    } finally {
-      setLoading(false);
+    if (formData.rol === "CLIENTE") {
+      await registrarUsuario(payload);
+    } else {
+      await registrarEmpleado(payload);
     }
-  };
+
+    setMessage("Usuario registrado correctamente.");
+
+    setFormData({
+      nombreUsuario: "",
+      email: "",
+      contraseña: "",
+      rol: "",
+      nombre: "",
+      apellido: "",
+      direccion: "",
+      telefono: "",
+      area: "",
+      subarea: "",
+    });
+    setSubareas([]);
+  } catch (error: any) {
+    setMessage(error.response?.data?.message || "Error al registrar usuario.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   if (loadingInitial) return <Spinner />;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
+    // Estilos de diseño solicitados (sin fondo gris, más ancho, separado de navbar)
+    <div className="p-8"> 
+      <div className="w-full max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
         
         <h2 className="text-3xl font-semibold text-center mb-1 text-gray-800">
           Registrar Usuario
@@ -137,11 +168,38 @@ export default function RegistroUsuarioPage() {
 
           {/* FILA: rol / área / subárea */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Select label="Rol" name="rol" value={formData.rol} onChange={handleChange} required options={roles} />
+            {/* ROL: Usar el nombre como valor (valueKey="nombre") */}
+            <Select 
+              label="Rol" 
+              name="rol" 
+              value={formData.rol} 
+              onChange={handleChange} 
+              required 
+              options={roles} 
+              valueKey="nombre" 
+            />
 
-            <Select label="Área" name="area" value={formData.area} onChange={handleChange} options={areas} />
+            {/* ÁREA: Usar el id como valor (valueKey="id") */}
+            <Select 
+              label="Área" 
+              name="area" 
+              value={formData.area} 
+              onChange={handleChange} 
+              options={areas} 
+              valueKey="id" 
+            />
 
-            <Select label="Subárea" name="subarea" value={formData.subarea} onChange={handleChange} options={subareas} />
+            {/* SUBÁREA: Usar el id como valor (valueKey="id") */}
+            <Select 
+              label="Subárea" 
+              name="subarea" 
+              value={formData.subarea} 
+              onChange={handleChange} 
+              options={subareas} 
+              disabled={loadingSubareas || !formData.area} 
+              placeholder={loadingSubareas ? "Cargando..." : "Seleccionar..."}
+              valueKey="id"
+            />
           </div>
 
           {/* Botón */}
@@ -149,8 +207,8 @@ export default function RegistroUsuarioPage() {
             type="submit"
             disabled={loading}
             className="w-full py-2.5 bg-black text-white font-medium rounded-xl 
-                       hover:bg-gray-900 active:scale-[0.98] transition 
-                       disabled:bg-gray-400"
+                        hover:bg-gray-900 active:scale-[0.98] transition 
+                        disabled:bg-gray-400"
           >
             {loading ? "Cargando..." : "Registrar Usuario"}
           </button>
@@ -174,13 +232,27 @@ function Input({ label, ...props }: any) {
       <input
         {...props}
         className="w-full px-4 py-2.5 border border-gray-300 rounded-xl 
-                   focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                    focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
       />
     </div>
   );
 }
 
-function Select({ label, name, value, onChange, options = [], required }: any) {
+// Componente Select configurable
+function Select({ 
+    label, 
+    name, 
+    value, 
+    onChange, 
+    options = [], 
+    required, 
+    disabled = false, 
+    placeholder = "Seleccionar...",
+    valueKey = 'id' // Por defecto usamos 'id'
+}: any) {
+  
+  const keyField = valueKey === 'nombre' ? 'nombre' : valueKey; 
+  
   return (
     <div>
       <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -191,12 +263,17 @@ function Select({ label, name, value, onChange, options = [], required }: any) {
         value={value}
         required={required}
         onChange={onChange}
+        disabled={disabled}
         className="w-full px-4 py-2.5 border border-gray-300 rounded-xl 
-                   bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                    bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition 
+                    disabled:bg-gray-50 disabled:cursor-not-allowed"
       >
-        <option value="">Seleccionar...</option>
-        {options.map((o: any) => (
-          <option key={o._id} value={o._id}>
+        <option value="">{placeholder}</option> 
+        {options.map((o: any, index: number) => (
+          <option 
+            key={o[keyField] || index} 
+            value={o[valueKey]} 
+          >
             {o.nombre}
           </option>
         ))}
