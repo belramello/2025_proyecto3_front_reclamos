@@ -108,3 +108,20 @@ export const asignarReclamo = async (
     throw error;
   }
 };
+
+
+export const cerrarReclamo = async (
+  reclamoId: string,
+  resumenResolucion: string
+): Promise<void> => {
+  try {
+    const response = await api.post<void>(
+      `/reclamos/cerrar`,
+      { reclamoId, resumenResolucion }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al cerrar el reclamo:", error);
+    throw error;
+  }
+};

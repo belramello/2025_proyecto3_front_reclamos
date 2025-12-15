@@ -27,3 +27,4 @@ export const obtenerTodasLasSubareas = async (id: string): Promise<SubareaDto[]>
     throw error;
   }
 }
+
