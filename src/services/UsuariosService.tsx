@@ -1,8 +1,8 @@
-import type { EmpleadoDto } from "@/interfaces/empleado.dto";
 import api from "../utils/api";
 import type { LoginResponseDto } from "@/interfaces/login-response.dto";
 import type { CreateUsuarioDto } from "@/interfaces/create-usuario.dto";
 import type { ActivarCuentaDto } from "@/interfaces/activar-cuenta.dto";
+import type { EmpleadoDto } from "@/interfaces/empleado.dto";
 
 export const obtenerEmpleados = async (
   tipoUsuario: "empleado" | "encargado"
@@ -33,7 +33,10 @@ export const registrarUsuario = async (
   data: CreateUsuarioDto
 ): Promise<LoginResponseDto> => {
   try {
-    const response = await api.post<LoginResponseDto>("/usuarios/registrar-cliente", data);
+    const response = await api.post<LoginResponseDto>(
+      "/usuarios/registrar-cliente",
+      data
+    );
     return response.data;
   } catch (error: any) {
     console.error("Error al registrar usuario", error);
@@ -51,7 +54,10 @@ export const registrarEmpleado = async (
   data: CreateUsuarioDto
 ): Promise<LoginResponseDto> => {
   try {
-    const response = await api.post<LoginResponseDto>("/usuarios/gestion-empleados", data);
+    const response = await api.post<LoginResponseDto>(
+      "/usuarios/gestion-empleados",
+      data
+    );
     return response.data;
   } catch (error) {
     console.error("Error al registrar empleado", error);
