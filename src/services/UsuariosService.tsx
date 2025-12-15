@@ -59,6 +59,18 @@ export const registrarEmpleado = async (
   }
 };
 
+export const registrarEncargado = async (
+  data: CreateUsuarioDto
+): Promise<LoginResponseDto> => {
+  try {
+    const response = await api.post<LoginResponseDto>("/usuarios/encargados", data);
+    return response.data;
+  } catch (error) {
+    console.error("Error al registrar encargado", error);
+    throw error;
+  }
+};
+
 export const activarCuenta = async (data: ActivarCuentaDto) => {
   try {
     const response = await api.post("/auth/activar-cuenta", data);

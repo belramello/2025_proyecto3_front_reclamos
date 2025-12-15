@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner";
-import { registrarEmpleado, registrarUsuario } from "@/services/UsuariosService";
+import { registrarEmpleado, registrarEncargado, registrarUsuario } from "@/services/UsuariosService";
 import { obtenerAreas } from "@/services/AreaService";
 import { obtenerRoles } from "@/services/RolesService";
 import { obtenerTodasLasSubareas } from "@/services/SubareaService";
@@ -91,8 +91,12 @@ export default function RegistroUsuarioPage() {
 
     if (formData.rol === "CLIENTE") {
       await registrarUsuario(payload);
-    } else {
+    } 
+    if (formData.rol === "EMPLEADO") {
       await registrarEmpleado(payload);
+    }
+    if (formData.rol === "ENCARGADO_DE_ÁREA") {
+      await registrarEncargado(payload);
     }
 
     setMessage("Usuario registrado correctamente.");
