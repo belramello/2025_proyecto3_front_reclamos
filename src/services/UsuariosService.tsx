@@ -1,18 +1,18 @@
-import type { EmpleadoDeSubareaDeLogueadoDto } from "@/interfaces/find-all-empleado-de-subarea-de-logueado.dto";
+import type { EmpleadoDto } from "@/interfaces/empleado.dto";
 import api from "../utils/api";
 
 export const obtenerEmpleados = async (
   tipoUsuario: "empleado" | "encargado"
-): Promise<EmpleadoDeSubareaDeLogueadoDto[] | null> => {
+): Promise<EmpleadoDto[] | null> => {
   try {
     if (tipoUsuario === "empleado") {
-      const response = await api.get<EmpleadoDeSubareaDeLogueadoDto[] | null>(
+      const response = await api.get<EmpleadoDto[] | null>(
         `/usuarios/empleados-subarea`
       );
       //AGREGAR ELIMINACIÓN DEL PROPIO NOMBRE DEL USUARIO LOGUEADO.
       return response.data;
     }
-    const response = await api.get<EmpleadoDeSubareaDeLogueadoDto[] | null>(
+    const response = await api.get<EmpleadoDto[] | null>(
       `/usuarios/empleados-area`
     );
     //AGREGAR ELIMINACIÓN DEL PROPIO NOMBRE DEL USUARIO LOGUEADO.
