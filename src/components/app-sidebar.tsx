@@ -95,7 +95,16 @@ export function AppSidebar() {
               </SidebarMenuButton>
               <SidebarMenuItem />
             </PermissionGuard>
-
+                <PermissionGuard requiredPermissions={[Permisos.CREAR_FEEDBACK]}>
+              <SidebarMenuItem key={"Crear Feedback"}></SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href={"feedback"}>
+                  <UserPlus /> 
+                  <span>Crear Feedback</span>
+                </a>
+              </SidebarMenuButton>
+              <SidebarMenuItem />
+            </PermissionGuard>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

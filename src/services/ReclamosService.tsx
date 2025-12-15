@@ -125,3 +125,18 @@ export const cerrarReclamo = async (
     throw error;
   }
 };
+
+export const obtenerReclamo = async (
+  reclamoId: string
+): Promise<ReclamoEnMovimientoDto> => {
+  try {
+  const response = await api.get<ReclamoEnMovimientoDto>(
+    `/reclamos/${reclamoId}`
+  );
+  return response.data;
+}
+catch (error) {
+  console.error("Error al obtener el reclamo:", error);
+  throw error;
+}
+};

@@ -36,7 +36,17 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/feedback" element={<FeedbackPage />} />
+        <Route
+  path="/feedback"
+  element={
+    <ProtectedRoute>
+      <Layout>
+        <FeedbackPage />
+      </Layout>
+    </ProtectedRoute>
+  }
+/>
+
         <Route
           path="/reclamos-asignados"
           element={
