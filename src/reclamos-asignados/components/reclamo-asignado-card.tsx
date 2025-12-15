@@ -17,23 +17,28 @@ import { getPriorityStyles } from "@/utils/get-priority-styles";
 import { AlertCircleIcon } from "lucide-react";
 import ReclamoDetalleDialog from "@/mi-area/ReclamoHistorialDialog";
 import { formatearFechaArg } from "@/utils/formatear-fecha";
+import ResolverReclamoDialog from "./ResolverReclamoDialog";
 
 interface ReclamoCardProps {
   reclamo: ReclamoEnMovimientoDto;
   onDialogClose: () => void;
-  onResolver?: (reclamoId: string) => void;
 }
 
 const ReclamoAsignadaCard = ({
   reclamo,
   onDialogClose,
-  onResolver,
 }: ReclamoCardProps) => {
   const [openReasignar, setOpenReasignar] = useState(false);
   const [openDetalle, setOpenDetalle] = useState(false);
+  const [openResolver, setOpenResolver] = useState(false);
   const { titleColor, border, icon, buttonColor } = getPriorityStyles(
     reclamo.prioridad
   );
+  const handleResolucionSuccess = () => {
+    // Esto llamará a onDialogClose, que idealmente refresca la lista de reclamos
+    onDialogClose(); 
+    setOpenResolver(false); // Asegura que se cierra el diálogo
+  }
 
   return (
     <>
@@ -76,7 +81,7 @@ const ReclamoAsignadaCard = ({
           </Button>
           <Button
             className={buttonColor}
-            onClick={() => onResolver?.(reclamo.reclamoId)}
+            onClick={() => setOpenResolver(true)}
           >
             Resolver
           </Button>
@@ -104,6 +109,14 @@ const ReclamoAsignadaCard = ({
         reclamoId={reclamo.reclamoId}
         reclamoNroTicket={reclamo.reclamoNroTicket}
         reclamoTitulo={reclamo.reclamoTitulo}
+      />
+
+      <ResolverReclamoDialog
+        open={openResolver}
+        onOpenChange={setOpenResolver}
+        reclamoId={reclamo.reclamoId}
+        onSuccess={handleResolucionSuccess} // Pasa la función de éxito
+        reclamoNroTicket={reclamo.reclamoNroTicket}
       />
     </>
   );

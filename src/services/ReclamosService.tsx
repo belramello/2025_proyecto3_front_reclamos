@@ -115,8 +115,8 @@ export const cerrarReclamo = async (
   resumenResolucion: string
 ): Promise<void> => {
   try {
-    const response = await api.patch<void>(
-      `/reclamos/cerrar-reclamo`,
+    const response = await api.post<void>(
+      `/reclamos/cerrar`,
       { reclamoId, resumenResolucion }
     );
     return response.data;
