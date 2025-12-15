@@ -1,6 +1,6 @@
 export interface CreateUsuarioDto {
   nombre: string;
-  apellido: string;
+  apellido?: string;
   email: string;
   dni?: string;
   telefono?: string;
