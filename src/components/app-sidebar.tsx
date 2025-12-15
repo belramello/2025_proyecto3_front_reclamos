@@ -1,5 +1,5 @@
 import { AtSignIcon, ChartArea, Home, UserPlus } from "lucide-react";
-
+import logo from "../assets/logo.png";
 import {
   Sidebar,
   SidebarContent,
@@ -17,6 +17,15 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
+        <div className="p-4 flex justify-center">
+          <a href="/inicio"> {/* O la ruta principal de tu aplicación */}
+            <img 
+              src={logo} 
+              alt="Logo de la empresa" 
+              className="h-20 w-auto" // Ajusta el tamaño según sea necesario (e.g., h-10 es 40px)
+            />
+          </a>
+        </div>
         <SidebarGroup>
           <SidebarGroupLabel>Gestión de Reclamos</SidebarGroupLabel>
           <SidebarGroupContent>

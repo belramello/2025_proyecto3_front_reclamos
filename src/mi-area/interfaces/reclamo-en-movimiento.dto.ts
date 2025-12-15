@@ -13,4 +13,5 @@ export interface ReclamoEnMovimientoDto {
   prioridad: Prioridad;
   nombreEstado: Estado;
   tipoAsignacion: TipoAsignacion;
+  subAreaAsignada?: string;
 }
