@@ -1,56 +1,82 @@
-import React from 'react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-// Definición de las props para el componente
 interface FeedbackConfirmationDialogProps {
   isOpen: boolean;
-  onClose: () => void;
   rating: number;
   comment: string;
 }
 
 const FeedbackConfirmationDialog: React.FC<FeedbackConfirmationDialogProps> = ({
   isOpen,
-  onClose,
   rating,
   comment,
 }) => {
-  if (!isOpen) {
-    return null;
-  }
+  const navigate = useNavigate();
 
-  // Clases base para Tailwind CSS
-  const dialogClasses = "fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center z-50 transition-opacity";
-  const contentClasses = "bg-white rounded-xl shadow-2xl p-6 w-11/12 max-w-md transform transition-all scale-100";
+  if (!isOpen) return null;
+
+  const handleAccept = () => {
+    navigate("/inicio");
+  };
 
   return (
-    <div className={dialogClasses} onClick={onClose}>
-      <div className={contentClasses} onClick={(e) => e.stopPropagation()}>
-        
-        <div className="flex flex-col items-center">
-          <svg className="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <h2 className="text-xl font-bold mb-2 text-gray-800">¡Feedback Enviado con Éxito!</h2>
-          <p className="text-gray-600 mb-4 text-center">Gracias por compartir tu experiencia. Tu opinión es muy valiosa para nosotros.</p>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div
+        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl animate-in fade-in zoom-in"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Icono */}
+        <div className="flex justify-center mb-4">
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+            <svg
+              className="h-9 w-9 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
         </div>
 
-        <div className="bg-gray-50 p-4 rounded-lg mb-6">
-          <p className="font-semibold text-gray-700">Detalles del Feedback:</p>
-          <p className="text-sm text-gray-600">
-            <span className="font-medium">Calificación:</span> {rating} {'★'.repeat(rating)}
+        {/* Título */}
+        <h2 className="text-center text-xl font-semibold text-gray-800">
+          ¡Feedback enviado!
+        </h2>
+
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Gracias por ayudarnos a mejorar con tu opinión.
+        </p>
+
+        {/* Detalles */}
+        <div className="mt-5 rounded-xl bg-gray-50 p-4 text-sm text-gray-700">
+          <p className="font-medium">
+            Calificación:
+            <span className="ml-2 text-yellow-500">
+              {"★".repeat(rating)}
+              {"☆".repeat(5 - rating)}
+            </span>
           </p>
-          <p className="text-sm text-gray-600 mt-2">
-            <span className="font-medium">Comentario:</span> {comment || "No se proporcionó ningún comentario adicional."}
+
+          <p className="mt-2">
+            <span className="font-medium">Comentario:</span>{" "}
+            {comment?.trim() || "Sin comentarios adicionales."}
           </p>
         </div>
 
+        {/* Acción */}
         <button
-          onClick={onClose}
-          className="w-full bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition"
+          onClick={handleAccept}
+          className="mt-6 w-full rounded-xl bg-blue-600 py-2.5 text-sm font-semibold text-white transition hover:bg-blue-700 active:scale-[0.98]"
         >
           Aceptar
         </button>
-
       </div>
     </div>
   );

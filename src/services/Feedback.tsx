@@ -5,6 +5,7 @@ export const feedback= async (
     feedbackData: Feedback
 ): Promise<void> => {
   try {
+    console.log("Enviando feedback:", feedbackData);
     const response = await api.post<void>(`/feedback`, feedbackData);
     return response.data;
   } catch (error) {
