@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { SubareaDeUsuarioDto } from "@/interfaces/subarea.dto";
+import type { SubareaDto } from "@/interfaces/subarea.dto";
 import { obtenerSubareasDeUsuario } from "@/services/SubareaService";
 import { useEffect, useState } from "react";
 
@@ -18,7 +18,7 @@ export function SelectSubareaDropdown({
   value,
   onValueChange,
 }: SelectSubareaDropdownProps) {
-  const [subareas, setSubareas] = useState<SubareaDeUsuarioDto[]>([]);
+  const [subareas, setSubareas] = useState<SubareaDto[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

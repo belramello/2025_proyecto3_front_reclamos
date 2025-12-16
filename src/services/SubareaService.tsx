@@ -10,21 +10,19 @@ export const obtenerSubareasDeUsuario = async (): Promise<
     );
     return response.data;
   } catch (error) {
-    console.error(
-      "Error al obtener las subáreas del área a la que pertenece el usuario",
-      error
-    );
+    console.error("Error al obtener las subáreas del  usuario", error);
     throw error;
   }
 };
 
-export const obtenerTodasLasSubareas = async (id: string): Promise<SubareaDto[]> => {
+export const obtenerTodasLasSubareas = async (
+  id: string
+): Promise<SubareaDto[]> => {
   try {
-    const response = await api.get<SubareaDto[]>(`/subareas/area/${id}`); 
+    const response = await api.get<SubareaDto[]>(`/subareas/area/${id}`);
     return response.data;
   } catch (error) {
-    console.error("Error al obtener todas las subáreas por área", error); // Mensaje de error más específico
+    console.error("Error al obtener todas las subáreas por área", error);
     throw error;
   }
-}
-
+};
