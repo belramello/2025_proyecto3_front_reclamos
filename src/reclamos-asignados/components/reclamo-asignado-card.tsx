@@ -24,10 +24,7 @@ interface ReclamoCardProps {
   onDialogClose: () => void;
 }
 
-const ReclamoAsignadaCard = ({
-  reclamo,
-  onDialogClose,
-}: ReclamoCardProps) => {
+const ReclamoAsignadaCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
   const [openReasignar, setOpenReasignar] = useState(false);
   const [openDetalle, setOpenDetalle] = useState(false);
   const [openResolver, setOpenResolver] = useState(false);
@@ -35,11 +32,9 @@ const ReclamoAsignadaCard = ({
     reclamo.prioridad
   );
   const handleResolucionSuccess = () => {
-    // Esto llamará a onDialogClose, que idealmente refresca la lista de reclamos
-    onDialogClose(); 
-    setOpenResolver(false); // Asegura que se cierra el diálogo
-  }
-
+    onDialogClose();
+    setOpenResolver(false);
+  };
   return (
     <>
       <Card className={`w-96 ${border}`}>
@@ -79,10 +74,7 @@ const ReclamoAsignadaCard = ({
           <Button variant="outline" onClick={() => setOpenReasignar(true)}>
             Reasignar
           </Button>
-          <Button
-            className={buttonColor}
-            onClick={() => setOpenResolver(true)}
-          >
+          <Button className={buttonColor} onClick={() => setOpenResolver(true)}>
             Resolver
           </Button>
         </CardFooter>
@@ -109,13 +101,15 @@ const ReclamoAsignadaCard = ({
         reclamoId={reclamo.reclamoId}
         reclamoNroTicket={reclamo.reclamoNroTicket}
         reclamoTitulo={reclamo.reclamoTitulo}
+        reclamoProyecto={reclamo.nombreProyecto}
+        reclamoCliente={reclamo.nombreApellidoCliente}
       />
 
       <ResolverReclamoDialog
         open={openResolver}
         onOpenChange={setOpenResolver}
         reclamoId={reclamo.reclamoId}
-        onSuccess={handleResolucionSuccess} // Pasa la función de éxito
+        onSuccess={handleResolucionSuccess}
         reclamoNroTicket={reclamo.reclamoNroTicket}
       />
     </>

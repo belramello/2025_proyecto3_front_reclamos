@@ -5,22 +5,32 @@ import type { ReclamoConsultadoDTO } from "@/reclamos/interfaces/reclamo-consult
 import type { ReclamoFrontDto } from "@/interfaces/reclamo-dto";
 import { mapReclamoToConsultado } from "./mapReclamoToConsultado";
 import type { ReclamoAsignadoDto } from "@/reclamos-asignados/interfaces/reclamo-asignado-dto";
-
-// --- SERVICIOS ---
-
-export const obtenerReclamosAsignadosDeEmpleado = async (): Promise<ReclamoEnMovimientoDto[]> => {
+export const obtenerReclamosAsignadosDeEmpleado = async (): Promise<
+  ReclamoEnMovimientoDto[]
+> => {
   try {
-    const response = await api.get<ReclamoEnMovimientoDto[]>(`/reclamos/consultar-reclamos-asignados`);
+    const response = await api.get<ReclamoEnMovimientoDto[]>(
+      `/reclamos/consultar-reclamos-asignados`
+    );
+    console.log("response.data:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error al obtener los reclamos asignados del usuario:", error);
+    console.error(
+      "Error al obtener los reclamos asignados del usuario:",
+      error
+    );
     throw error;
   }
 };
 
-export const obtenerReclamosAsignadosAUnArea = async (): Promise<ReclamoEnMovimientoDto[]> => {
+export const obtenerReclamosAsignadosAUnArea = async (): Promise<
+  ReclamoEnMovimientoDto[]
+> => {
   try {
-    const response = await api.get<ReclamoEnMovimientoDto[]>(`/reclamos/reclamos-area`);
+    const response = await api.get<ReclamoEnMovimientoDto[]>(
+      `/reclamos/reclamos-area`
+    );
+    console.log("response.data:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error al obtener los reclamos asignados del área:", error);
@@ -36,9 +46,18 @@ export const reasignarReclamo = async (
 ): Promise<void> => {
   try {
     const payloads = {
-      area: { url: `/reclamos/reasignar-area/${reclamoId}`, data: { areaId: destinoId, comentario } },
-      subarea: { url: `/reclamos/reasignar-subarea/${reclamoId}`, data: { subareaId: destinoId, comentario } },
-      empleado: { url: `/reclamos/reasignar-empleado/${reclamoId}`, data: { empleadoId: destinoId, comentario } },
+      area: {
+        url: `/reclamos/reasignar-area/${reclamoId}`,
+        data: { areaId: destinoId, comentario },
+      },
+      subarea: {
+        url: `/reclamos/reasignar-subarea/${reclamoId}`,
+        data: { subareaId: destinoId, comentario },
+      },
+      empleado: {
+        url: `/reclamos/reasignar-empleado/${reclamoId}`,
+        data: { empleadoId: destinoId, comentario },
+      },
     };
 
     const { url, data } = payloads[tipoAsignacion];
@@ -49,8 +68,13 @@ export const reasignarReclamo = async (
   }
 };
 
-export const obtenerHistorialReclamo = async (reclamoId: string): Promise<HistorialReclamo> => {
-  const response = await api.get<HistorialReclamo>(`/reclamos/historial/${reclamoId}`);
+export const obtenerHistorialReclamo = async (
+  reclamoId: string
+): Promise<HistorialReclamo> => {
+  const response = await api.get<HistorialReclamo>(
+    `/reclamos/historial/${reclamoId}`
+  );
+  console.log("response.data:", response.data);
   return response.data;
 };
 
@@ -62,9 +86,18 @@ export const asignarReclamo = async (
 ): Promise<void> => {
   try {
     const payloads = {
-      area: { url: `/reclamos/asignar-area/${reclamoId}`, data: { areaId: destinoId, comentario } },
-      subarea: { url: `/reclamos/asignar-subarea/${reclamoId}`, data: { subareaId: destinoId, comentario } },
-      empleado: { url: `/reclamos/asignar-empleado/${reclamoId}`, data: { empleadoId: destinoId, comentario } },
+      area: {
+        url: `/reclamos/asignar-area/${reclamoId}`,
+        data: { areaId: destinoId, comentario },
+      },
+      subarea: {
+        url: `/reclamos/asignar-subarea/${reclamoId}`,
+        data: { subareaId: destinoId, comentario },
+      },
+      empleado: {
+        url: `/reclamos/asignar-empleado/${reclamoId}`,
+        data: { empleadoId: destinoId, comentario },
+      },
     };
 
     const { url, data } = payloads[tipoAsignacion];
@@ -85,7 +118,10 @@ export const crearReclamo = async (reclamo: ReclamoFrontDto): Promise<void> => {
   }
 };
 
-export const cerrarReclamo = async (reclamoId: string, resumenResolucion: string): Promise<void> => {
+export const cerrarReclamo = async (
+  reclamoId: string,
+  resumenResolucion: string
+): Promise<void> => {
   try {
     await api.post(`/reclamos/cerrar`, { reclamoId, resumenResolucion });
   } catch (error) {
@@ -94,9 +130,13 @@ export const cerrarReclamo = async (reclamoId: string, resumenResolucion: string
   }
 };
 
-export const obtenerReclamosCliente = async (): Promise<ReclamoConsultadoDTO[]> => {
+export const obtenerReclamosCliente = async (): Promise<
+  ReclamoConsultadoDTO[]
+> => {
   try {
-    const response = await api.get<ReclamoConsultadoDTO[]>(`/reclamos/reclamos-cliente`);
+    const response = await api.get<ReclamoConsultadoDTO[]>(
+      `/reclamos/reclamos-cliente`
+    );
     return response.data.map(mapReclamoToConsultado);
   } catch (error) {
     console.error("Error obteniendo los reclamos", error);
@@ -104,9 +144,13 @@ export const obtenerReclamosCliente = async (): Promise<ReclamoConsultadoDTO[]> 
   }
 };
 
-export const obtenerReclamo = async (reclamoId: string): Promise<ReclamoEnMovimientoDto> => {
+export const obtenerReclamo = async (
+  reclamoId: string
+): Promise<ReclamoEnMovimientoDto> => {
   try {
-    const response = await api.get<ReclamoEnMovimientoDto>(`/reclamos/${reclamoId}`);
+    const response = await api.get<ReclamoEnMovimientoDto>(
+      `/reclamos/${reclamoId}`
+    );
     return response.data;
   } catch (error) {
     console.error("Error al obtener el reclamo:", error);
@@ -114,9 +158,13 @@ export const obtenerReclamo = async (reclamoId: string): Promise<ReclamoEnMovimi
   }
 };
 
-export const obtenerReclamosDelUsuario = async (): Promise<ReclamosDelClienteDto[]> => {
+export const obtenerReclamosDelUsuario = async (): Promise<
+  ReclamosDelClienteDto[]
+> => {
   try {
-    const response = await api.get<ReclamosDelClienteDto[]>(`/reclamos/reclamos-cliente`);
+    const response = await api.get<ReclamosDelClienteDto[]>(
+      `/reclamos/reclamos-cliente`
+    );
     return response.data;
   } catch (error) {
     console.error("Error al obtener los reclamos del usuario:", error);

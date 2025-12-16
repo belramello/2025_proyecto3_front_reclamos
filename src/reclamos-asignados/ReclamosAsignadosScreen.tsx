@@ -34,10 +34,6 @@ function ReclamosAsignadosScreen() {
     }
   };
 
-  const handleResolver = (reclamoId: string) => {
-    console.log("Resolver reclamo:", reclamoId);
-  };
-
   if (loading) {
     return <Spinner></Spinner>;
   }
@@ -57,7 +53,6 @@ function ReclamosAsignadosScreen() {
             key={reclamo.reclamoId}
             reclamo={reclamo}
             onDialogClose={getReclamosAsignados}
-            onResolver={handleResolver}
           />
         ))}
       </div>

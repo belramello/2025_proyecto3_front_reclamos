@@ -20,6 +20,8 @@ interface ReclamoDetalleDialogProps {
   reclamoId: string;
   reclamoNroTicket: string;
   reclamoTitulo: string;
+  reclamoProyecto: string;
+  reclamoCliente: string;
 }
 
 const ReclamoDetalleDialog = ({
@@ -28,6 +30,8 @@ const ReclamoDetalleDialog = ({
   reclamoId,
   reclamoNroTicket,
   reclamoTitulo,
+  reclamoProyecto,
+  reclamoCliente,
 }: ReclamoDetalleDialogProps) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -75,10 +79,10 @@ const ReclamoDetalleDialog = ({
                 Descripcion: {reclamoDetalle.descripcion || "N/A"}
               </DialogDescription>
               <DialogDescription>
-                Proyecto: {reclamoDetalle.proyecto?.nombre || "N/A"}
+                Proyecto: {reclamoProyecto || "N/A"}
               </DialogDescription>
               <DialogDescription>
-                Cliente: {reclamoDetalle.cliente?.nombre || "N/A"}
+                Cliente: {reclamoCliente || "N/A"}
               </DialogDescription>
               <DialogDescription>
                 Prioridad:{" "}

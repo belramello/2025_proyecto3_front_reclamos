@@ -96,6 +96,8 @@ const ReclamoPendienteCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
         reclamoId={reclamo.reclamoId}
         reclamoNroTicket={reclamo.reclamoNroTicket}
         reclamoTitulo={reclamo.reclamoTitulo}
+        reclamoProyecto={reclamo.nombreProyecto}
+        reclamoCliente={reclamo.nombreApellidoCliente}
       />
     </>
   );
