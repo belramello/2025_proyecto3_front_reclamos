@@ -16,4 +16,5 @@ export interface RespuestaUsuarioDto {
   area?: AreaDto;
   proyecto?: ProyectoDto; // ← actualizado
   fechaCreacion: string;
+  estado: string;
 }
