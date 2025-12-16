@@ -18,6 +18,7 @@ import { AlertCircleIcon } from "lucide-react";
 import TipoPrioridadBadge from "@/components/prioridad-badge";
 import { getPriorityStyles } from "@/utils/get-priority-styles";
 import { formatearFechaArg } from "@/utils/formatear-fecha";
+import { autoAsignarReclamo } from "@/services/ReclamosService";
 
 interface ReclamoCardProps {
   reclamo: ReclamoEnMovimientoDto;
@@ -71,8 +72,8 @@ const ReclamoSubAreaCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
         </CardContent>
 
         <CardFooter className="flex justify-center gap-2">
-          <Button className={buttonColor} onClick={() => setOpenAsignar(true)}>
-            Atender / Asignar
+          <Button className={buttonColor} onClick={() => autoAsignarReclamo(reclamo.reclamoId)}>
+            Asignar | Autoasignar
           </Button>
         </CardFooter>
       </Card>

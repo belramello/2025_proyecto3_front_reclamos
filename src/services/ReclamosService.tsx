@@ -187,6 +187,17 @@ export const obtenerReclamosDelUsuario = async (): Promise<
   }
 };
 
+export const autoAsignarReclamo = async (
+  reclamoId: string
+): Promise<void> => {
+  try {
+    await api.patch(`/reclamos/autoasignar/${reclamoId}`);
+  } catch (error) {
+    console.error("Error al autoasignar el reclamo:", error);
+    throw error;
+  }
+}
+
 // --- INTERFACES ---
 
 export interface ReclamosDelClienteDto {
