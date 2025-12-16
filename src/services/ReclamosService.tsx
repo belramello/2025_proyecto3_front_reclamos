@@ -1,9 +1,14 @@
 import type { ReclamoEnMovimientoDto } from "@/mi-area/interfaces/reclamo-en-movimiento.dto";
 import api from "../utils/api";
 import type { HistorialReclamo } from "@/interfaces/respuesta-historial-reclamo.dto";
+<<<<<<< HEAD
 import type { ReclamoConsultadoDTO } from "@/reclamos/interfaces/reclamo-consultado-dto";
 import type { ReclamoFrontDto } from "@/interfaces/reclamo-dto";
 import { mapReclamoToConsultado } from "./mapReclamoToConsultado";
+=======
+import type { AreaDto } from "@/interfaces/area-dto";
+import type { ReclamoAsignadoDto } from "@/reclamos-asignados/interfaces/reclamo-asignado-dto";
+>>>>>>> origin/develop
 
 export const obtenerReclamosAsignadosDeEmpleado = async (): Promise<
   ReclamoEnMovimientoDto[]
@@ -113,6 +118,7 @@ export const asignarReclamo = async (
 };
 
 
+<<<<<<< HEAD
 export const crearReclamo = async (
   reclamo: ReclamoFrontDto
 ): Promise<void> => {
@@ -121,10 +127,25 @@ export const crearReclamo = async (
     
   } catch (error) {
     console.error("Error al crear el reclamo", error);
+=======
+export const cerrarReclamo = async (
+  reclamoId: string,
+  resumenResolucion: string
+): Promise<void> => {
+  try {
+    const response = await api.post<void>(
+      `/reclamos/cerrar`,
+      { reclamoId, resumenResolucion }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al cerrar el reclamo:", error);
+>>>>>>> origin/develop
     throw error;
   }
 };
 
+<<<<<<< HEAD
 export const obtenerReclamosCliente = async (): Promise<ReclamoConsultadoDTO[]> => {
   try {
     const response = await api.get<ReclamoConsultadoDTO[]>(`/reclamos/reclamos-cliente`);
@@ -135,3 +156,121 @@ export const obtenerReclamosCliente = async (): Promise<ReclamoConsultadoDTO[]> 
     throw error;
   }
 };
+=======
+export const obtenerReclamo = async (
+  reclamoId: string
+): Promise<ReclamoEnMovimientoDto> => {
+  try {
+  const response = await api.get<ReclamoEnMovimientoDto>(
+    `/reclamos/${reclamoId}`
+  );
+  return response.data;
+}
+catch (error) {
+  console.error("Error al obtener el reclamo:", error);
+  throw error;
+}
+};
+
+export const obtenerReclamosDelUsuario = async (): Promise<ReclamosDelClienteDto[]> => {
+  try {
+    const response = await api.get<ReclamosDelClienteDto[]>(
+      `/reclamos/reclamos-cliente`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener los reclamos del usuario:", error);
+    throw error;
+  }
+};
+
+export interface ReclamosDelClienteDto {
+  _id: string;
+  nroTicket: string;
+  titulo: string;
+  descripcion: string;
+  resumenResolucion?: string;
+
+  prioridad: "Baja" | "Media" | "Alta";
+  nivelCriticidad: number;
+
+  tipoReclamo: TipoReclamoDto;
+  proyecto: ProyectoDto;
+
+  historialEstado: HistorialEstadoDto[];
+  historialAsignacion: HistorialAsignacionDto[];
+}
+
+export interface TipoReclamoDto {
+  _id: string;
+  nombre: string;
+  area: string;
+  reclamos: ReclamoAsignadoDto[];
+}
+
+export interface ProyectoDto {
+  _id: string;
+  titulo: string;
+  descripcion: string;
+  descripcionDetallada: string;
+  fechaInicio: string; // ISO string
+  tipo: string;
+  cliente: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface HistorialAsignacionDto {
+  id: string;
+
+  desdeArea: AreaDto | null;
+  haciaArea: AreaDto | null;
+
+  desdeSubarea: SubareaDto | null;
+  haciaSubarea: SubareaDto | null;
+
+  deEmpleado: EmpleadoDto | null;
+  haciaEmpleado: EmpleadoDto | null;
+
+  tipoAsignacion:
+    | "Inicial"
+    | "AsignacionDeAreaAEmpleado"
+    | "AsignacionDeEmpleadoAEmpleado"
+    | "AsignacionDeEmpleadoASubarea"
+    | "AsignacionDeAreaASubarea"
+    | "Autoasignacion"
+    | "AsignacionDeEmpleadoAArea";
+
+  comentario: string | null;
+  fechaAsignacion: string;
+  fechaHoraFin: string | null;
+}
+
+export interface AreaDto {
+  id: string;
+  nombre: string;
+}
+
+export interface SubareaDto {
+  id: string;
+  nombre: string;
+}
+
+export interface EmpleadoDto {
+  id: string;
+  nombre: string;
+}
+
+export interface HistorialEstadoDto {
+  id: string;
+  fechaHoraInicio: string;
+  fechaHoraFin: string | null;
+  estado: EstadoDto;
+}
+
+export interface EstadoDto {
+  id: string;
+  nombre: string;
+}
+
+>>>>>>> origin/develop

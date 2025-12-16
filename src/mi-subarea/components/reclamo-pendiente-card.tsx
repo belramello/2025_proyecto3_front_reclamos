@@ -10,35 +10,25 @@ import {
 import { Button } from "@/components/ui/button";
 import TipoAsignacionBadge from "@/components/tipo-asignacion-badge";
 import { useState } from "react";
-import ReasignarReclamoDialog from "../ReasignacionReclamoDialog";
-import type { ReclamoEnMovimientoDto } from "@/mi-area/interfaces/reclamo-en-movimiento.dto";
+import AsignarReclamoDialog from "../AsignacionReclamoDialog";
+import type { ReclamoEnMovimientoDto } from "../interfaces/reclamo-en-movimiento.dto";
+import { AlertCircleIcon } from "lucide-react";
+import ReclamoDetalleDialog from "../ReclamoHistorialDialog";
 import TipoPrioridadBadge from "@/components/prioridad-badge";
 import { getPriorityStyles } from "@/utils/get-priority-styles";
-import { AlertCircleIcon } from "lucide-react";
-import ReclamoDetalleDialog from "@/mi-area/ReclamoHistorialDialog";
 import { formatearFechaArg } from "@/utils/formatear-fecha";
-import ResolverReclamoDialog from "./ResolverReclamoDialog";
 
 interface ReclamoCardProps {
   reclamo: ReclamoEnMovimientoDto;
   onDialogClose: () => void;
 }
 
-const ReclamoAsignadaCard = ({
-  reclamo,
-  onDialogClose,
-}: ReclamoCardProps) => {
-  const [openReasignar, setOpenReasignar] = useState(false);
+const ReclamoPendienteCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
+  const [openAsignar, setOpenAsignar] = useState(false);
   const [openDetalle, setOpenDetalle] = useState(false);
-  const [openResolver, setOpenResolver] = useState(false);
   const { titleColor, border, icon, buttonColor } = getPriorityStyles(
     reclamo.prioridad
   );
-  const handleResolucionSuccess = () => {
-    // Esto llamará a onDialogClose, que idealmente refresca la lista de reclamos
-    onDialogClose(); 
-    setOpenResolver(false); // Asegura que se cierra el diálogo
-  }
 
   return (
     <>
@@ -65,9 +55,10 @@ const ReclamoAsignadaCard = ({
           <p className="mt-0.5">Proyecto: {reclamo.nombreProyecto}</p>
           <p className="mt-0.5">Cliente: {reclamo.nombreApellidoCliente}</p>
           <p className="mt-0.5">
-            Asignado desde:{" "}
+            Derivado a área desde:{" "}
             {formatearFechaArg(reclamo.fechaHoraInicioAsignacion)}
           </p>
+          <p className="mt-0.5">Estado: {reclamo.nombreEstado}</p>
           <p className="mt-0.5">
             Prioridad: <TipoPrioridadBadge tipoPrioridad={reclamo.prioridad} />
           </p>
@@ -75,29 +66,25 @@ const ReclamoAsignadaCard = ({
             Nivel de Criticidad: {reclamo.nivelCriticidad}
           </p>
         </CardContent>
+
         <CardFooter className="flex justify-center gap-2">
-          <Button variant="outline" onClick={() => setOpenReasignar(true)}>
-            Reasignar
-          </Button>
-          <Button
-            className={buttonColor}
-            onClick={() => setOpenResolver(true)}
-          >
-            Resolver
+          <Button className={buttonColor} onClick={() => setOpenAsignar(true)}>
+            Asignar
           </Button>
         </CardFooter>
       </Card>
 
-      <ReasignarReclamoDialog
-        open={openReasignar}
+      <AsignarReclamoDialog
+        open={openAsignar}
         onOpenChange={(open) => {
-          setOpenReasignar(open);
+          setOpenAsignar(open);
           if (!open) {
             onDialogClose();
           }
         }}
         reclamo={reclamo}
       />
+
       <ReclamoDetalleDialog
         open={openDetalle}
         onOpenChange={(open) => {
@@ -110,16 +97,7 @@ const ReclamoAsignadaCard = ({
         reclamoNroTicket={reclamo.reclamoNroTicket}
         reclamoTitulo={reclamo.reclamoTitulo}
       />
-
-      <ResolverReclamoDialog
-        open={openResolver}
-        onOpenChange={setOpenResolver}
-        reclamoId={reclamo.reclamoId}
-        onSuccess={handleResolucionSuccess} // Pasa la función de éxito
-        reclamoNroTicket={reclamo.reclamoNroTicket}
-      />
     </>
   );
 };
-
-export default ReclamoAsignadaCard;
+export default ReclamoPendienteCard;

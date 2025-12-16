@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { loginRequest } from "../services/ServicioAutenticacion";
 import { AuthContext } from "../auth/context/contexto";
+import logo from "../assets/logo.png";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -40,6 +41,9 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
+      <div className="flex justify-center mb-4">
+          <img src={logo} alt="Logo de la empresa" className="h-24 w-auto" /> 
+        </div>
         <h2 className="text-3xl font-semibold text-center mb-1 text-gray-800">
           Bienvenido
         </h2>

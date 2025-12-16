@@ -10,13 +10,26 @@ import EstadisticasScreen from "./estadisticas/EstadisticasScreen";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import ReclamosScreen from "./reclamos/ReclamosScreen";
 import ReclamosPantallaPrincipal from "./reclamos/ConsultarReclamosScreen";
+import RegistroUsuarioPage from "./registro/RegistrarScreen";
+
+import GestionEmpleadosScreen from "./mi-area/GestionEmpleadosScreen";
+import ActivarCuentaScreen from "./auth/ActivarCuentaScreen";
+import GestionClientesScreen from "./clientes/GestionClientesScreen";
+import GestionProyectosScreen from "./proyectos/GestionProyectosScreen";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Rutas públicas */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/auth/activar-cuenta"
+          element={<ActivarCuentaScreen />}
+        />
+
+        {/* Rutas protegidas */}
         <Route
           path="/mi-subarea"
           element={
@@ -27,7 +40,29 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/feedback" element={<FeedbackPage />} />
+
+        <Route
+          path="/registrar-usuario"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <RegistroUsuarioPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/feedback"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <FeedbackPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/reclamos-asignados"
           element={
@@ -38,6 +73,29 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/gestion-clientes"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <GestionClientesScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/gestion-proyectos"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <GestionProyectosScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
         <Route
           path="/inicio"
           element={
@@ -61,11 +119,22 @@ function App() {
         />
 
         <Route
+          path="/gestion-empleados"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <GestionEmpleadosScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/mis-reclamos"
           element={
             <ProtectedRoute>
               <Layout>
-                <ReclamosPantallaPrincipal/>
+                <ReclamosPantallaPrincipal />
               </Layout>
             </ProtectedRoute>
           }
@@ -76,7 +145,7 @@ function App() {
           element={
             <ProtectedRoute>
               <Layout>
-                <ReclamosScreen/>
+                <ReclamosScreen />
               </Layout>
             </ProtectedRoute>
           }

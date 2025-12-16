@@ -16,6 +16,7 @@ export const Permisos = {
   ELIMINAR_USUARIOS: "692213c87a194cd01af50563", //590, 594 ENCARGADO, ADMIN
   CREAR_USUARIOS: "692213c87a194cd01af50560", //590, 594 ENCARGADO, ADMIN
   ASIGNAR_RECLAMOS: "692213c87a194cd01af5055d", //594 ENCARGADO
+  
 };
 
 export type PermisosType = (typeof Permisos)[keyof typeof Permisos];
