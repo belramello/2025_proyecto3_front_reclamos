@@ -10,7 +10,6 @@ import EstadisticasScreen from "./estadisticas/EstadisticasScreen";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import ReclamosScreen from "./reclamos/ReclamosScreen";
 import ReclamosPantallaPrincipal from "./reclamos/ConsultarReclamosScreen";
-import RegistroUsuarioPage from "./registro/RegistrarScreen";
 import GestionEmpleadosScreen from "./mi-area/GestionEmpleadosScreen";
 import ActivarCuentaScreen from "./auth/ActivarCuentaScreen";
 import GestionClientesScreen from "./clientes/GestionClientesScreen";
@@ -50,18 +49,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route
-          path="/registrar-usuario"
-          element={
-            <ProtectedRoute>
-              <Layout>
-                <RegistroUsuarioPage />
-              </Layout>
-            </ProtectedRoute>
-          }
-        />
-
         <Route
           path="/feedback"
           element={

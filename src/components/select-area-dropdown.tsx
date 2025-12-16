@@ -6,7 +6,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { AreaDto } from "@/interfaces/area-dto";
-import { obtenerAreas } from "@/services/AreaService";
+import { obtenerAreasDeUsuario } from "@/services/AreaService";
 import { useEffect, useState } from "react";
 
 interface SelectAreaDropdownProps {
@@ -28,7 +28,7 @@ export function SelectAreaDropdown({
   const cargarAreas = async () => {
     setLoading(true);
     try {
-      const areas = await obtenerAreas();
+      const areas = await obtenerAreasDeUsuario();
       setAreas(areas || []);
     } catch (error) {
       console.error("Error al cargar áreas:", error);

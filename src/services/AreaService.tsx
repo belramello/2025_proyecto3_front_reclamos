@@ -1,9 +1,9 @@
 import api from "../utils/api";
 import type { AreaDto } from "@/interfaces/area-dto";
 
-export const obtenerAreas = async (): Promise<AreaDto[] | null> => {
+export const obtenerAreasDeUsuario = async (): Promise<AreaDto[] | null> => {
   try {
-    const response = await api.get<AreaDto[] | null>(`/areas`);
+    const response = await api.get<AreaDto[] | null>(`/areas/usuario`);
     return response.data;
   } catch (error) {
     console.error("Error las áreas", error);

@@ -5,7 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { EmpleadoDeSubareaDeLogueadoDto } from "@/interfaces/find-all-empleado-de-subarea-de-logueado.dto";
+import type { EmpleadoDto } from "@/interfaces/empleado.dto";
 import { obtenerEmpleados } from "@/services/UsuariosService";
 import { useEffect, useState } from "react";
 
@@ -20,9 +20,7 @@ export function SelectEmpleadoDropdown({
   onValueChange,
   tipoUsuario,
 }: SelectEmpleadoDropdownProps) {
-  const [empleados, setEmpleados] = useState<EmpleadoDeSubareaDeLogueadoDto[]>(
-    []
-  );
+  const [empleados, setEmpleados] = useState<EmpleadoDto[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
