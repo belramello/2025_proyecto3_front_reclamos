@@ -10,16 +10,26 @@ import EstadisticasScreen from "./estadisticas/EstadisticasScreen";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import RegistroUsuarioPage from "./registro/RegistrarScreen";
 
-// IMPORT NUEVO: Pantalla de Gestión de Empleados
+// Import Pantallas Nuevas existentes
 import GestionEmpleadosScreen from "./mi-area/GestionEmpleadosScreen";
+import ActivarCuentaScreen from "./auth/ActivarCuentaScreen";
+
+// --- NUEVOS IMPORTS PARA CLIENTES Y PROYECTOS ---
+import GestionClientesScreen from "./clientes/GestionClientesScreen";
+import GestionProyectosScreen from "./proyectos/GestionProyectosScreen";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Rutas Públicas */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         
+        {/* --- RUTA DE ACTIVACIÓN (Pública) --- */}
+        <Route path="/auth/activar-cuenta" element={<ActivarCuentaScreen />} />
+
+        {/* Rutas Protegidas */}
         <Route
           path="/mi-subarea"
           element={
@@ -41,16 +51,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
-  path="/feedback"
-  element={
-    <ProtectedRoute>
-      <Layout>
-        <FeedbackPage />
-      </Layout>
-    </ProtectedRoute>
-  }
-/>
+          path="/feedback"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <FeedbackPage />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
         <Route
           path="/reclamos-asignados"
@@ -63,6 +74,30 @@ function App() {
           }
         />
         
+        {/* --- NUEVAS RUTAS DE ADMINISTRADOR --- */}
+        <Route
+          path="/gestion-clientes"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <GestionClientesScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/gestion-proyectos"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <GestionProyectosScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        {/* ----------------------------------- */}
+
         <Route
           path="/inicio"
           element={
@@ -85,7 +120,6 @@ function App() {
           }
         />
 
-        {/* --- NUEVA RUTA: GESTIÓN DE EMPLEADOS --- */}
         <Route
           path="/gestion-empleados"
           element={

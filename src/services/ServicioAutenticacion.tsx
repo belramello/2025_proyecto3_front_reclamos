@@ -2,7 +2,6 @@ import type { LoginResponse } from "../login/interfaces/login-response.interface
 import type { LoginCredentials } from "../login/interfaces/login.interface";
 import { eliminarTokens, guardarToken } from "../utils/almacenamiento";
 import api from "../utils/api";
-//import type { RegistrarUsuarioDto } from "../roles/interfaces/registrar-usuario-dto";
 
 export const loginRequest = async (
   credentials: LoginCredentials
@@ -22,12 +21,26 @@ export const cerrarSesion = () => {
   try {
     eliminarTokens();
     window.location.href = "login";
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     console.error("Error al cerrar sesión");
   }
 };
 
+export const activarCuentaUsuario = async (token: string, nuevaContrasena: string) => {
+  try {
+    // CORRECCIÓN AQUÍ:
+    // El backend espera recibir "contraseña", no "nuevaContrasena".
+    // Mapeamos el valor para que coincida con el DTO del backend.
+    const response = await api.post("/auth/activar-cuenta", {
+      token,
+      contraseña: nuevaContrasena, 
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al activar cuenta:", error);
+    throw error;
+  }
+};
 /*export const registrarUsuario = async (
   registrarUsuarioDto: RegistrarUsuarioDto
 ): Promise<void> => {

@@ -28,8 +28,7 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
 
   // Estado del formulario
   const [formData, setFormData] = useState({
-    nombre: "",
-    apellido: "",
+    nombreCompleto: "", // Aquí guardamos todo lo que escriba (Nombre + Apellido)
     email: "",
     subarea: "", 
   });
@@ -56,13 +55,16 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     try {
-      // --- CORRECCIÓN AQUÍ ---
-      // El backend exige 'nombreUsuario'. Usamos el email como nombre de usuario.
-      // También aseguramos el rol 'EMPLEADO'.
+      // --- LÓGICA SIMPLIFICADA ---
+      // Mandamos TODO el texto al campo 'nombre' del backend.
+      // No mandamos campo 'apellido' porque la BD no lo tiene.
       const payload = {
-        ...formData,
-        nombreUsuario: formData.email, 
+        nombre: formData.nombreCompleto, 
+        email: formData.email,
+        subarea: formData.subarea,
+        nombreUsuario: formData.email, // Usamos email como usuario
         rol: "EMPLEADO"
       };
 
@@ -70,11 +72,10 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
 
       alert("¡Empleado creado con éxito! Se ha enviado el correo de activación.");
       setOpen(false); 
-      setFormData({ nombre: "", apellido: "", email: "", subarea: "" });
+      setFormData({ nombreCompleto: "", email: "", subarea: "" }); // Reseteamos
       if (onEmpleadoCreado) onEmpleadoCreado();
     } catch (error: any) {
       console.error(error);
-      // Mejoramos el mensaje de error para que sea más legible
       const mensaje = error.response?.data?.message;
       alert("Error al crear empleado: " + (Array.isArray(mensaje) ? mensaje.join(", ") : mensaje || "Intente nuevamente"));
     } finally {
@@ -96,30 +97,27 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
+            
+            {/* CAMPO UNIFICADO: NOMBRE COMPLETO */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="nombre" className="text-right">Nombre</Label>
+              <Label htmlFor="nombreCompleto" className="text-right">
+                Empleado
+              </Label>
               <Input
-                id="nombre"
-                name="nombre"
-                value={formData.nombre}
+                id="nombreCompleto"
+                name="nombreCompleto"
+                placeholder="Ej: Juan Pérez"
+                value={formData.nombreCompleto}
                 onChange={handleChange}
                 className="col-span-3"
                 required
               />
             </div>
+
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="apellido" className="text-right">Apellido</Label>
-              <Input
-                id="apellido"
-                name="apellido"
-                value={formData.apellido}
-                onChange={handleChange}
-                className="col-span-3"
-                required
-              />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">Email</Label>
+              <Label htmlFor="email" className="text-right">
+                Email
+              </Label>
               <Input
                 id="email"
                 name="email"
@@ -130,8 +128,11 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
                 required
               />
             </div>
+
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="subarea" className="text-right">Subárea</Label>
+              <Label htmlFor="subarea" className="text-right">
+                Subárea
+              </Label>
               <div className="col-span-3">
                 <Select 
                   onValueChange={(value) => setFormData({...formData, subarea: value})}
@@ -150,6 +151,7 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
                 </Select>
               </div>
             </div>
+
           </div>
           <DialogFooter>
             <Button type="submit" disabled={loading}>
