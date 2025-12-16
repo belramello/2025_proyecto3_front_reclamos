@@ -10,7 +10,6 @@ import {
 import { Button } from "@/components/ui/button";
 import TipoAsignacionBadge from "@/components/tipo-asignacion-badge";
 import { useState } from "react";
-// Importa tus diálogos correspondientes (puedes reutilizar los mismos si la lógica es igual)
 import AsignarReclamoDialog from "@/mi-area/AsignacionReclamoDialog";
 import ReclamoDetalleDialog from "@/mi-area/ReclamoHistorialDialog";
 import type { ReclamoEnMovimientoDto } from "@/mi-area/interfaces/reclamo-en-movimiento.dto";
@@ -28,14 +27,16 @@ interface ReclamoCardProps {
 const ReclamoSubAreaCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
   const [openAsignar, setOpenAsignar] = useState(false);
   const [openDetalle, setOpenDetalle] = useState(false);
-  
+
   const { titleColor, border, icon, buttonColor } = getPriorityStyles(
     reclamo.prioridad
   );
 
   return (
     <>
-      <Card className={`w-96 shadow-sm hover:shadow-md transition-shadow ${border}`}>
+      <Card
+        className={`w-96 shadow-sm hover:shadow-md transition-shadow ${border}`}
+      >
         <CardHeader>
           <CardTitle>
             <button
@@ -48,31 +49,46 @@ const ReclamoSubAreaCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
               </span>
             </button>
           </CardTitle>
-          <CardDescription className="font-medium">{reclamo.reclamoTitulo}</CardDescription>
+          <CardDescription className="font-medium">
+            {reclamo.reclamoTitulo}
+          </CardDescription>
           <CardAction>
             <TipoAsignacionBadge tipoAsignacion={reclamo.tipoAsignacion} />
           </CardAction>
         </CardHeader>
 
         <CardContent className="text-sm space-y-1">
-          <p><span className="font-semibold">Proyecto:</span> {reclamo.nombreProyecto}</p>
-          <p><span className="font-semibold">Cliente:</span> {reclamo.nombreApellidoCliente || "No especificado"}</p>
+          <p>
+            <span className="font-semibold">Proyecto:</span>{" "}
+            {reclamo.nombreProyecto}
+          </p>
+          <p>
+            <span className="font-semibold">Cliente:</span>{" "}
+            {reclamo.nombreApellidoCliente || "No especificado"}
+          </p>
           <p>
             <span className="font-semibold">Recibido en Subárea:</span>{" "}
             {formatearFechaArg(reclamo.fechaHoraInicioAsignacion)}
           </p>
-          <p><span className="font-semibold">Estado:</span> {reclamo.nombreEstado}</p>
+          <p>
+            <span className="font-semibold">Estado:</span>{" "}
+            {reclamo.nombreEstado}
+          </p>
           <div className="flex items-center gap-2">
-            <span className="font-semibold">Prioridad:</span> 
+            <span className="font-semibold">Prioridad:</span>
             <TipoPrioridadBadge tipoPrioridad={reclamo.prioridad} />
           </div>
           <p>
-            <span className="font-semibold">Nivel de Criticidad:</span> {reclamo.nivelCriticidad}
+            <span className="font-semibold">Nivel de Criticidad:</span>{" "}
+            {reclamo.nivelCriticidad}
           </p>
         </CardContent>
 
         <CardFooter className="flex justify-center gap-2">
-          <Button className={buttonColor} onClick={() => autoAsignarReclamo(reclamo.reclamoId)}>
+          <Button
+            className={buttonColor}
+            onClick={() => autoAsignarReclamo(reclamo.reclamoId)}
+          >
             Asignar | Autoasignar
           </Button>
         </CardFooter>
