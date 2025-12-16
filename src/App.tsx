@@ -16,6 +16,9 @@ import GestionEmpleadosScreen from "./mi-area/GestionEmpleadosScreen";
 import ActivarCuentaScreen from "./auth/ActivarCuentaScreen";
 import GestionClientesScreen from "./clientes/GestionClientesScreen";
 import GestionProyectosScreen from "./proyectos/GestionProyectosScreen";
+import GestionEncargadosScreen from "./encargados/GestiónEncargadosScreen";
+import OlvideContrasenaScreen from "./login/OlvideContraseña";
+import RestablecerContrasenaScreen from "./login/RecuperarContraseña";
 
 function App() {
   return (
@@ -27,6 +30,17 @@ function App() {
         <Route
           path="/auth/activar-cuenta"
           element={<ActivarCuentaScreen />}
+        />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/recuperar-contraseña" element={<LoginPage />} />
+        <Route
+          path="/forgot-password"
+          element={<OlvideContrasenaScreen />}
+        />
+        <Route path="/" element={<LoginPage />} />
+        <Route
+          path="/reset-password"
+          element={<RestablecerContrasenaScreen />}
         />
 
         {/* Rutas protegidas */}
@@ -146,6 +160,16 @@ function App() {
             <ProtectedRoute>
               <Layout>
                 <ReclamosScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/gestión-encargados"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <GestionEncargadosScreen />
               </Layout>
             </ProtectedRoute>
           }

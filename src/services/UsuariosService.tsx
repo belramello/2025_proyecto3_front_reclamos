@@ -3,6 +3,8 @@ import type { LoginResponseDto } from "@/interfaces/login-response.dto";
 import type { CreateUsuarioDto } from "@/interfaces/create-usuario.dto";
 import type { ActivarCuentaDto } from "@/interfaces/activar-cuenta.dto";
 import type { EmpleadoDto } from "@/interfaces/empleado.dto";
+import type { OlvidarContraseñaDto } from "@/interfaces/olvidar-contraseña.dto";
+import type { RecuperarContraseñaDto } from "@/interfaces/recuperar-contraseña.dto";
 
 export const obtenerEmpleados = async (
   tipoUsuario: "empleado" | "encargado"
@@ -104,3 +106,29 @@ export const actualizarEmpleado = async (id: string, data: any) => {
       throw error;
     }
   };
+
+
+
+export const forgotPassword = async (payload: OlvidarContraseñaDto) => {
+  try {
+    return await api.post(`/usuarios/forgot-password`, payload);
+  } catch (error: any) {
+    const msg =
+      error.response?.data?.message ||
+      "Error al solicitar recuperación de contraseña";
+    throw new Error(msg);
+  }
+};
+
+export const resetPassword = async (resetPasswordDto: RecuperarContraseñaDto) => {
+  try {
+    return await api.post<void>(`/usuarios/reset-password`, {
+      token: resetPasswordDto.token,
+      contraseña: resetPasswordDto.contraseña,
+    });
+  } catch (error: any) {
+    const msg =
+      error.response?.data?.message || "Error al restablecer contraseña";
+    throw new Error(msg);
+  }
+};

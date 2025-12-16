@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginRequest } from "../services/ServicioAutenticacion";
 import { AuthContext } from "../auth/context/contexto";
 import logo from "../assets/logo.png";
@@ -105,12 +105,12 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-5 text-center">
-          <a
-            href="/forgot-password"
-            className="text-sm text-gray-500 hover:text-gray-700 transition"
+          <Link
+            to="/forgot-password"
+            className="text-sm text-gray-500 hover:text-gray-900 transition font-medium"
           >
             ¿Olvidaste tu contraseña?
-          </a>
+          </Link>
         </div>
       </div>
     </div>

@@ -13,7 +13,7 @@ export interface RespuestaUsuarioDto {
   direccion?: string;
   rol: string | RolDto;
   subarea?: string | SubareaDto;
-  area?: AreaDto;
+  area?: AreaDto | string;
   proyecto?: ProyectoDto; // ← actualizado
   fechaCreacion: string;
   estado: string;

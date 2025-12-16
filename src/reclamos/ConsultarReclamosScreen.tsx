@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // 🚨 Importamos Link para la navegación
-import { Plus } from "lucide-react"; // 🚨 Importamos el icono de más
+import { Link } from "react-router-dom"; 
+import { Plus } from "lucide-react"; 
 import { Spinner } from "@/components/ui/spinner";
 import ReclamoClienteCard from "./components/reclamo-consultado-card";
 import type { ReclamoConsultadoDTO } from "./interfaces/reclamo-consultado-dto";
@@ -59,8 +59,7 @@ function ReclamosPantallaPrincipal() {
         title="Crear nuevo reclamo"
       >
         <Plus size={20} className="group-active:rotate-90 transition-transform" />
-        
-        {/* Opcional: Un pequeño texto que aparece al pasar el mouse */}
+    
         <span className="max-w-0 overflow-hidden group-hover:max-w-xs group-hover:ml-2 transition-all duration-500 ease-in-out whitespace-nowrap font-medium">
           Nuevo Reclamo
         </span>
