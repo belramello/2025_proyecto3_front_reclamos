@@ -86,7 +86,7 @@ export function AppSidebar() {
               </SidebarMenuButton>
               <SidebarMenuItem />
 
-              {/* --- NUEVO ITEM: EMPLEADOS REGISTRADOS (Gestión de Empleados) --- */}
+              {/* --- 1. TU PARTE: EMPLEADOS REGISTRADOS --- */}
               <PermissionGuard requiredPermissions={[Permisos.CREAR_USUARIOS]}>
                 <SidebarMenuItem key={"Empleados Registrados"}></SidebarMenuItem>
                 <SidebarMenuButton asChild>
@@ -98,13 +98,25 @@ export function AppSidebar() {
                 <SidebarMenuItem />
               </PermissionGuard>
 
-              {/* --- ITEM EXISTENTE: REGISTRAR USUARIO (Probablemente Admin) --- */}
+              {/* --- 2. COMÚN: REGISTRAR USUARIO --- */}
               <PermissionGuard requiredPermissions={[Permisos.CREAR_USUARIOS]}>
                 <SidebarMenuItem key={"Registrar Usuario"}></SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <a href={"registrar-usuario"}>
                     <UserPlus /> 
                     <span>Registrar Usuario</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+              </PermissionGuard>
+
+              {/* --- 3. PARTE DE TU COMPAÑERA: CREAR FEEDBACK --- */}
+              <PermissionGuard requiredPermissions={[Permisos.CREAR_FEEDBACK]}>
+                <SidebarMenuItem key={"Crear Feedback"}></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"feedback"}>
+                    <UserPlus /> 
+                    <span>Crear Feedback</span>
                   </a>
                 </SidebarMenuButton>
                 <SidebarMenuItem />
