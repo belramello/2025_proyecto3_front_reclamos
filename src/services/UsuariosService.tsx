@@ -85,7 +85,6 @@ export const activarCuenta = async (data: ActivarCuentaDto) => {
 };
 export const actualizarEmpleado = async (id: string, data: any) => {
   try {
-    // Apunta al endpoint que hicimos en el back: PATCH /usuarios/gestion-empleados/:id
     const response = await api.patch(`/usuarios/gestion-empleados/${id}`, data);
     return response.data;
   } catch (error) {

@@ -14,20 +14,16 @@ export const obtenerClientesPaginados = async (
   busqueda: string = ""
 ) => {
   try {
-    // Definimos los parámetros base
     const params: any = {
       page,
       limit,
       rol: "CLIENTE",
     };
 
-    // VALIDACIÓN ESTRICTA:
-    // Solo agregamos la propiedad 'busqueda' si la variable existe Y no está vacía.
     if (busqueda && busqueda.trim().length > 0) {
       params.busqueda = busqueda;
     }
 
-    // Nota: No enviamos &busqueda= si está vacío.
     const response = await api.get<PaginatedResponse<any>>(`/usuarios`, {
       params,
     });
@@ -46,7 +42,6 @@ export const obtenerTodosLosClientes = async () => {
         limit: 100,
       },
     });
-    // Manejo robusto de la respuesta
     return response.data.data || response.data;
   } catch (error) {
     console.error("Error obteniendo lista de clientes para select:", error);

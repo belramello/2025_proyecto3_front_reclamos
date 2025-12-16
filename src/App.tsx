@@ -79,11 +79,7 @@ function App() {
           path="/reclamos-asignados"
           element={
             <ProtectedRoute>
-              <PermissionGuard
-                requiredPermissions={
-                  Permisos.REASIGNAR_RECLAMO_A_SUBAREA_AREA_EMPLEADO
-                }
-              >
+              <PermissionGuard requiredPermissions={Permisos.CERRAR_RECLAMO}>
                 <Layout>
                   <ReclamosAsignadosScreen />
                 </Layout>

@@ -96,16 +96,6 @@ const ReclamoAsignadaCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
               </span>
             </div>
 
-            {reclamo.subAreaAsignada && (
-              <div className="flex items-center gap-2">
-                <Building size={16} className="text-gray-400" />
-                <span className="font-semibold text-gray-700">Subárea:</span>
-                <span className="ml-auto text-right">
-                  {reclamo.subAreaAsignada}
-                </span>
-              </div>
-            )}
-
             <div className="flex items-center gap-2">
               <Calendar size={16} className="text-gray-400" />
               <span className="font-semibold text-gray-700">Asignado:</span>
