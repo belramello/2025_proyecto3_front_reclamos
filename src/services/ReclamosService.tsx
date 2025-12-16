@@ -38,6 +38,21 @@ export const obtenerReclamosAsignadosAUnArea = async (): Promise<
   }
 };
 
+export const obtenerReclamosAsignadosAUnaSubArea = async (): Promise<
+  ReclamoEnMovimientoDto[]
+> => {
+  try {
+    const response = await api.get<ReclamoEnMovimientoDto[]>(
+      `/reclamos/reclamos-subarea`
+    );
+    console.log("response.data:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener los reclamos asignados del Sub área:", error);
+    throw error;
+  }
+};
+
 export const reasignarReclamo = async (
   reclamoId: string,
   tipoAsignacion: "area" | "subarea" | "empleado",
@@ -171,6 +186,17 @@ export const obtenerReclamosDelUsuario = async (): Promise<
     throw error;
   }
 };
+
+export const autoAsignarReclamo = async (
+  reclamoId: string
+): Promise<void> => {
+  try {
+    await api.patch(`/reclamos/autoasignar/${reclamoId}`);
+  } catch (error) {
+    console.error("Error al autoasignar el reclamo:", error);
+    throw error;
+  }
+}
 
 // --- INTERFACES ---
 
