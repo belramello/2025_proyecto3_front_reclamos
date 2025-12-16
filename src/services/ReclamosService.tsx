@@ -1,6 +1,9 @@
 import type { ReclamoEnMovimientoDto } from "@/mi-area/interfaces/reclamo-en-movimiento.dto";
 import api from "../utils/api";
 import type { HistorialReclamo } from "@/interfaces/respuesta-historial-reclamo.dto";
+import type { ReclamoConsultadoDTO } from "@/reclamos/interfaces/reclamo-consultado-dto";
+import type { ReclamoFrontDto } from "@/interfaces/reclamo-dto";
+import { mapReclamoToConsultado } from "./mapReclamoToConsultado";
 
 export const obtenerReclamosAsignadosDeEmpleado = async (): Promise<
   ReclamoEnMovimientoDto[]
@@ -105,6 +108,30 @@ export const asignarReclamo = async (
     }
   } catch (error) {
     console.error("Error al asignar el reclamo:", error);
+    throw error;
+  }
+};
+
+
+export const crearReclamo = async (
+  reclamo: ReclamoFrontDto
+): Promise<void> => {
+  try {
+    await api.post(`/reclamos`, reclamo); 
+    
+  } catch (error) {
+    console.error("Error al crear el reclamo", error);
+    throw error;
+  }
+};
+
+export const obtenerReclamosCliente = async (): Promise<ReclamoConsultadoDTO[]> => {
+  try {
+    const response = await api.get<ReclamoConsultadoDTO[]>(`/reclamos/reclamos-cliente`);
+    console.log("🔥 RESPUESTA DEL BACKEND:", response.data);
+    return response.data.map(mapReclamoToConsultado);
+  } catch (error) {
+    console.error("Error obteniendo los reclamos", error);
     throw error;
   }
 };

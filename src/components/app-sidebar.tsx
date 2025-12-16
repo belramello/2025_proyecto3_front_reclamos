@@ -68,6 +68,19 @@ export function AppSidebar() {
                 <SidebarMenuItem />
               </PermissionGuard>
 
+              <PermissionGuard
+                requiredPermissions={Permisos.REGISTRAR_RECLAMO}
+              >
+                <SidebarMenuItem key={"Mis reclamos"}></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"mis-reclamos"}>
+                    <Home />
+                    <span>Reclamos</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+              </PermissionGuard>
+
               <SidebarMenuItem key={"Estadisticas"}></SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <a href={"inicio"}>
