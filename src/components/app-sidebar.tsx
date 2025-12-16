@@ -146,18 +146,6 @@ export function AppSidebar() {
                 <SidebarMenuItem />
               </PermissionGuard>
 
-              {/* --- 2. COMÚN: REGISTRAR USUARIO (ADMIN y quizás otros) --- */}
-              <PermissionGuard requiredPermissions={[Permisos.CREAR_USUARIOS]}>
-                <SidebarMenuItem key={"Registrar Usuario"}></SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <a href={"registrar-usuario"}>
-                    <UserPlus /> 
-                    <span>Registrar Usuario</span>
-                  </a>
-                </SidebarMenuButton>
-                <SidebarMenuItem />
-              </PermissionGuard>
-
               {/* --- 3. PARTE DE TU COMPAÑERA: CREAR FEEDBACK --- */}
               <PermissionGuard requiredPermissions={[Permisos.CREAR_FEEDBACK]}>
                 <SidebarMenuItem key={"Crear Feedback"}></SidebarMenuItem>
