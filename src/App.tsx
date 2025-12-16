@@ -8,28 +8,42 @@ import MiSubareaScreen from "./mi-subarea/MiSubareaScreen";
 import MiAreaScreen from "./mi-area/MiAreaScreen";
 import EstadisticasScreen from "./estadisticas/EstadisticasScreen";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import ReclamosScreen from "./reclamos/ReclamosScreen";
+import ReclamosPantallaPrincipal from "./reclamos/ConsultarReclamosScreen";
 import RegistroUsuarioPage from "./registro/RegistrarScreen";
 
-// Import Pantallas Nuevas existentes
 import GestionEmpleadosScreen from "./mi-area/GestionEmpleadosScreen";
 import ActivarCuentaScreen from "./auth/ActivarCuentaScreen";
-
-// --- NUEVOS IMPORTS PARA CLIENTES Y PROYECTOS ---
 import GestionClientesScreen from "./clientes/GestionClientesScreen";
 import GestionProyectosScreen from "./proyectos/GestionProyectosScreen";
+import GestionEncargadosScreen from "./encargados/GestiónEncargadosScreen";
+import OlvideContrasenaScreen from "./login/OlvideContraseña";
+import RestablecerContrasenaScreen from "./login/RecuperarContraseña";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Rutas Públicas */}
+        {/* Rutas públicas */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
-        
-        {/* --- RUTA DE ACTIVACIÓN (Pública) --- */}
-        <Route path="/auth/activar-cuenta" element={<ActivarCuentaScreen />} />
+        <Route
+          path="/auth/activar-cuenta"
+          element={<ActivarCuentaScreen />}
+        />
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/recuperar-contraseña" element={<LoginPage />} />
+        <Route
+          path="/forgot-password"
+          element={<OlvideContrasenaScreen />}
+        />
+        <Route path="/" element={<LoginPage />} />
+        <Route
+          path="/reset-password"
+          element={<RestablecerContrasenaScreen />}
+        />
 
-        {/* Rutas Protegidas */}
+        {/* Rutas protegidas */}
         <Route
           path="/mi-subarea"
           element={
@@ -40,7 +54,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
+
         <Route
           path="/registrar-usuario"
           element={
@@ -73,8 +87,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-        
-        {/* --- NUEVAS RUTAS DE ADMINISTRADOR --- */}
+
         <Route
           path="/gestion-clientes"
           element={
@@ -96,7 +109,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* ----------------------------------- */}
 
         <Route
           path="/inicio"
@@ -131,6 +143,37 @@ function App() {
           }
         />
 
+        <Route
+          path="/mis-reclamos"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <ReclamosPantallaPrincipal />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/crear-reclamo"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <ReclamosScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/gestión-encargados"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <GestionEncargadosScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

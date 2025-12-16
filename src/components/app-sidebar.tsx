@@ -1,4 +1,4 @@
-import { AtSignIcon, ChartArea, Home, UserPlus, Users, Briefcase, Folder } from "lucide-react"; // Agregué Briefcase y Folder
+import { AtSignIcon, ChartArea, Home, UserPlus, Users, Briefcase, Folder,Shield, } from "lucide-react"; // Agregué Briefcase y Folder
 import logo from "../assets/logo.png";
 import {
   Sidebar,
@@ -77,6 +77,18 @@ export function AppSidebar() {
                 <SidebarMenuItem />
               </PermissionGuard>
 
+              <PermissionGuard
+                requiredPermissions={Permisos.REGISTRAR_RECLAMO}
+              >
+                <SidebarMenuItem key={"Mis reclamos"}></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"mis-reclamos"}>
+                    <Home />
+                    <span>Reclamos</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+              </PermissionGuard>
               {/* --- 0. NUEVO: GESTIÓN DE CLIENTES Y PROYECTOS (SOLO ADMIN) --- */}
               {/* Asumimos que CREAR_USUARIOS lo tiene el Admin. Al mover empleados a otro permiso, el admin ya no verá empleados. */}
               <PermissionGuard requiredPermissions={[Permisos.EDITAR_PROYECTOS  , Permisos.ELIMINAR_PROYECTOS]}>
@@ -98,9 +110,18 @@ export function AppSidebar() {
                   </a>
                 </SidebarMenuButton>
                 <SidebarMenuItem />
+
+                <SidebarMenuItem key={"Gestion Encargados"}></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"gestión-encargados"}>
+                    <Shield size={18} /> 
+                    <span>Gestión de Encargados</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+
                 
               </PermissionGuard>
-              {/* ----------------------------------------------------------- */}
 
               <SidebarMenuItem key={"Estadisticas"}></SidebarMenuItem>
               <SidebarMenuButton asChild>
@@ -120,18 +141,6 @@ export function AppSidebar() {
                   <a href={"gestion-empleados"}>
                     <Users /> 
                     <span>Empleados Registrados</span>
-                  </a>
-                </SidebarMenuButton>
-                <SidebarMenuItem />
-              </PermissionGuard>
-
-              {/* --- 2. COMÚN: REGISTRAR USUARIO (ADMIN y quizás otros) --- */}
-              <PermissionGuard requiredPermissions={[Permisos.CREAR_USUARIOS]}>
-                <SidebarMenuItem key={"Registrar Usuario"}></SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <a href={"registrar-usuario"}>
-                    <UserPlus /> 
-                    <span>Registrar Usuario</span>
                   </a>
                 </SidebarMenuButton>
                 <SidebarMenuItem />
