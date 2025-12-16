@@ -21,10 +21,7 @@ export const obtenerEmpleados = async (
     );
     return response.data;
   } catch (error) {
-    console.error(
-      "Error al obtener los empleados",
-      error
-    );
+    console.error("Error al obtener los empleados", error);
     throw error;
   }
 };
@@ -66,7 +63,10 @@ export const registrarEncargado = async (
   data: CreateUsuarioDto
 ): Promise<LoginResponseDto> => {
   try {
-    const response = await api.post<LoginResponseDto>("/usuarios/encargados", data);
+    const response = await api.post<LoginResponseDto>(
+      "/usuarios/encargados",
+      data
+    );
     return response.data;
   } catch (error) {
     console.error("Error al registrar encargado", error);
@@ -84,30 +84,25 @@ export const activarCuenta = async (data: ActivarCuentaDto) => {
   }
 };
 export const actualizarEmpleado = async (id: string, data: any) => {
-    try {
-      // Apunta al endpoint que hicimos en el back: PATCH /usuarios/gestion-empleados/:id
-      const response = await api.patch(`/usuarios/gestion-empleados/${id}`, data);
-      return response.data;
-    } catch (error) {
-      console.error("Error al actualizar empleado", error);
-      throw error;
-    }
-  };
+  try {
+    // Apunta al endpoint que hicimos en el back: PATCH /usuarios/gestion-empleados/:id
+    const response = await api.patch(`/usuarios/gestion-empleados/${id}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error al actualizar empleado", error);
+    throw error;
+  }
+};
 
-  // --- ELIMINAR EMPLEADO (DELETE) ---
-  export const eliminarEmpleado = async (id: string) => {
-    try {
-      // Apunta al endpoint del back: DELETE /usuarios/gestion-empleados/:id
-      // El Back validará si tiene reclamos y tirará error si no se puede borrar.
-      const response = await api.delete(`/usuarios/gestion-empleados/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error("Error al eliminar empleado", error);
-      throw error;
-    }
-  };
-
-
+export const eliminarEmpleado = async (id: string) => {
+  try {
+    const response = await api.delete(`/usuarios/gestion-empleados/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al eliminar empleado", error);
+    throw error;
+  }
+};
 
 export const forgotPassword = async (payload: OlvidarContraseñaDto) => {
   try {
@@ -120,7 +115,9 @@ export const forgotPassword = async (payload: OlvidarContraseñaDto) => {
   }
 };
 
-export const resetPassword = async (resetPasswordDto: RecuperarContraseñaDto) => {
+export const resetPassword = async (
+  resetPasswordDto: RecuperarContraseñaDto
+) => {
   try {
     return await api.post<void>(`/usuarios/reset-password`, {
       token: resetPasswordDto.token,
