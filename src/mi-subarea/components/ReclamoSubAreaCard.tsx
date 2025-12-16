@@ -10,10 +10,11 @@ import {
 import { Button } from "@/components/ui/button";
 import TipoAsignacionBadge from "@/components/tipo-asignacion-badge";
 import { useState } from "react";
-import AsignarReclamoDialog from "../AsignacionReclamoDialog";
-import type { ReclamoEnMovimientoDto } from "../interfaces/reclamo-en-movimiento.dto";
+// Importa tus diálogos correspondientes (puedes reutilizar los mismos si la lógica es igual)
+import AsignarReclamoDialog from "@/mi-area/AsignacionReclamoDialog";
+import ReclamoDetalleDialog from "@/mi-area/ReclamoHistorialDialog";
+import type { ReclamoEnMovimientoDto } from "@/mi-area/interfaces/reclamo-en-movimiento.dto";
 import { AlertCircleIcon } from "lucide-react";
-import ReclamoDetalleDialog from "../ReclamoHistorialDialog";
 import TipoPrioridadBadge from "@/components/prioridad-badge";
 import { getPriorityStyles } from "@/utils/get-priority-styles";
 import { formatearFechaArg } from "@/utils/formatear-fecha";
@@ -23,53 +24,55 @@ interface ReclamoCardProps {
   onDialogClose: () => void;
 }
 
-const ReclamoPendienteCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
+const ReclamoSubAreaCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
   const [openAsignar, setOpenAsignar] = useState(false);
   const [openDetalle, setOpenDetalle] = useState(false);
+  
   const { titleColor, border, icon, buttonColor } = getPriorityStyles(
     reclamo.prioridad
   );
 
   return (
     <>
-      <Card className={`w-96 ${border}`}>
+      <Card className={`w-96 shadow-sm hover:shadow-md transition-shadow ${border}`}>
         <CardHeader>
           <CardTitle>
             <button
               onClick={() => setOpenDetalle(true)}
               className="flex items-center gap-2 hover:underline cursor-pointer text-left w-full"
             >
-              {icon && <AlertCircleIcon className="text-red-700" />}
+              {icon && <AlertCircleIcon className="text-red-700" size={20} />}
               <span className={titleColor}>
                 Reclamo N° {reclamo.reclamoNroTicket}
               </span>
             </button>
           </CardTitle>
-          <CardDescription>{reclamo.reclamoTitulo}</CardDescription>
+          <CardDescription className="font-medium">{reclamo.reclamoTitulo}</CardDescription>
           <CardAction>
             <TipoAsignacionBadge tipoAsignacion={reclamo.tipoAsignacion} />
           </CardAction>
         </CardHeader>
 
-        <CardContent>
-          <p className="mt-0.5">Proyecto: {reclamo.nombreProyecto}</p>
-          <p className="mt-0.5">Cliente: {reclamo.nombreApellidoCliente}</p>
-          <p className="mt-0.5">
-            Derivado a área desde:{" "}
+        <CardContent className="text-sm space-y-1">
+          <p><span className="font-semibold">Proyecto:</span> {reclamo.nombreProyecto}</p>
+          <p><span className="font-semibold">Cliente:</span> {reclamo.nombreApellidoCliente || "No especificado"}</p>
+          <p>
+            <span className="font-semibold">Recibido en Subárea:</span>{" "}
             {formatearFechaArg(reclamo.fechaHoraInicioAsignacion)}
           </p>
-          <p className="mt-0.5">Estado: {reclamo.nombreEstado}</p>
-          <p className="mt-0.5">
-            Prioridad: <TipoPrioridadBadge tipoPrioridad={reclamo.prioridad} />
-          </p>
-          <p className="mt-0.5">
-            Nivel de Criticidad: {reclamo.nivelCriticidad}
+          <p><span className="font-semibold">Estado:</span> {reclamo.nombreEstado}</p>
+          <div className="flex items-center gap-2">
+            <span className="font-semibold">Prioridad:</span> 
+            <TipoPrioridadBadge tipoPrioridad={reclamo.prioridad} />
+          </div>
+          <p>
+            <span className="font-semibold">Nivel de Criticidad:</span> {reclamo.nivelCriticidad}
           </p>
         </CardContent>
 
         <CardFooter className="flex justify-center gap-2">
           <Button className={buttonColor} onClick={() => setOpenAsignar(true)}>
-            Asignar
+            Atender / Asignar
           </Button>
         </CardFooter>
       </Card>
@@ -78,9 +81,7 @@ const ReclamoPendienteCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
         open={openAsignar}
         onOpenChange={(open) => {
           setOpenAsignar(open);
-          if (!open) {
-            onDialogClose();
-          }
+          if (!open) onDialogClose();
         }}
         reclamo={reclamo}
       />
@@ -89,15 +90,16 @@ const ReclamoPendienteCard = ({ reclamo, onDialogClose }: ReclamoCardProps) => {
         open={openDetalle}
         onOpenChange={(open) => {
           setOpenDetalle(open);
-          if (!open) {
-            onDialogClose();
-          }
+          if (!open) onDialogClose();
         }}
         reclamoId={reclamo.reclamoId}
         reclamoNroTicket={reclamo.reclamoNroTicket}
         reclamoTitulo={reclamo.reclamoTitulo}
+        reclamoProyecto={reclamo.nombreProyecto}
+        reclamoCliente={reclamo.nombreApellidoCliente}
       />
     </>
   );
 };
-export default ReclamoPendienteCard;
+
+export default ReclamoSubAreaCard;

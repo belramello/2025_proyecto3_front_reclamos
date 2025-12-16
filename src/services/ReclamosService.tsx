@@ -38,7 +38,7 @@ export const obtenerReclamosAsignadosAUnArea = async (): Promise<
   }
 };
 
-export const obtenerReclamosAsignadosAUnSubArea = async (): Promise<
+export const obtenerReclamosAsignadosAUnaSubArea = async (): Promise<
   ReclamoEnMovimientoDto[]
 > => {
   try {
