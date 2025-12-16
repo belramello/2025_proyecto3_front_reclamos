@@ -10,12 +10,16 @@ import EstadisticasScreen from "./estadisticas/EstadisticasScreen";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import RegistroUsuarioPage from "./registro/RegistrarScreen";
 
+// IMPORT NUEVO: Pantalla de Gestión de Empleados
+import GestionEmpleadosScreen from "./mi-area/GestionEmpleadosScreen";
+
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
+        
         <Route
           path="/mi-subarea"
           element={
@@ -26,6 +30,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
         <Route
           path="/registrar-usuario"
           element={
@@ -36,7 +41,9 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
         <Route path="/feedback" element={<FeedbackPage />} />
+        
         <Route
           path="/reclamos-asignados"
           element={
@@ -47,6 +54,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        
         <Route
           path="/inicio"
           element={
@@ -68,6 +76,19 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* --- NUEVA RUTA: GESTIÓN DE EMPLEADOS --- */}
+        <Route
+          path="/gestion-empleados"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <GestionEmpleadosScreen />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </BrowserRouter>
   );

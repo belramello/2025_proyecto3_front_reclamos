@@ -1,4 +1,4 @@
-import { AtSignIcon, ChartArea, Home, UserPlus } from "lucide-react";
+import { AtSignIcon, ChartArea, Home, UserPlus, Users } from "lucide-react";
 import logo from "../assets/logo.png";
 import {
   Sidebar,
@@ -22,7 +22,7 @@ export function AppSidebar() {
             <img 
               src={logo} 
               alt="Logo de la empresa" 
-              className="h-20 w-auto" // Ajusta el tamaño según sea necesario (e.g., h-10 es 40px)
+              className="h-20 w-auto" // Ajusta el tamaño según sea necesario
             />
           </a>
         </div>
@@ -85,16 +85,30 @@ export function AppSidebar() {
                 </a>
               </SidebarMenuButton>
               <SidebarMenuItem />
+
+              {/* --- NUEVO ITEM: EMPLEADOS REGISTRADOS (Gestión de Empleados) --- */}
               <PermissionGuard requiredPermissions={[Permisos.CREAR_USUARIOS]}>
-              <SidebarMenuItem key={"Registrar Usuario"}></SidebarMenuItem>
-              <SidebarMenuButton asChild>
-                <a href={"registrar-usuario"}>
-                  <UserPlus /> 
-                  <span>Registrar Usuario</span>
-                </a>
-              </SidebarMenuButton>
-              <SidebarMenuItem />
-            </PermissionGuard>
+                <SidebarMenuItem key={"Empleados Registrados"}></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"gestion-empleados"}>
+                    <Users /> 
+                    <span>Empleados Registrados</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+              </PermissionGuard>
+
+              {/* --- ITEM EXISTENTE: REGISTRAR USUARIO (Probablemente Admin) --- */}
+              <PermissionGuard requiredPermissions={[Permisos.CREAR_USUARIOS]}>
+                <SidebarMenuItem key={"Registrar Usuario"}></SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <a href={"registrar-usuario"}>
+                    <UserPlus /> 
+                    <span>Registrar Usuario</span>
+                  </a>
+                </SidebarMenuButton>
+                <SidebarMenuItem />
+              </PermissionGuard>
 
             </SidebarMenu>
           </SidebarGroupContent>
