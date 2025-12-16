@@ -41,11 +41,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-<<<<<<< HEAD
-        
-        <Route path="/feedback" element={<FeedbackPage />} />
-        
-=======
         <Route
   path="/feedback"
   element={
@@ -57,7 +52,6 @@ function App() {
   }
 />
 
->>>>>>> f1e5e90f5087eb94bd4f4d417c0764aec005a227
         <Route
           path="/reclamos-asignados"
           element={
