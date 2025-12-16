@@ -5,4 +5,5 @@ export interface HistorialEstado {
   fechaHoraInicio: string;
   fechaHoraFin?: string | null;
   estado: EstadoDto;
+  imagenUrl?: string[];
 }

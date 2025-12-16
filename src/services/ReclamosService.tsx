@@ -74,7 +74,6 @@ export const obtenerHistorialReclamo = async (
   const response = await api.get<HistorialReclamo>(
     `/reclamos/historial/${reclamoId}`
   );
-  console.log("response.data:", response.data);
   return response.data;
 };
 
@@ -108,7 +107,6 @@ export const asignarReclamo = async (
   }
 };
 
-// 🚨 AQUÍ ESTABA EL ERROR (Ya corregido)
 export const crearReclamo = async (reclamo: ReclamoFrontDto): Promise<void> => {
   try {
     await api.post(`/reclamos`, reclamo);

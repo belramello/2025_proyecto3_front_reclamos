@@ -13,6 +13,7 @@ import type { HistorialAsignacion } from "@/interfaces/historial-asignacion.dto"
 import type { HistorialEstado } from "@/interfaces/historial-estado.dto";
 import { obtenerHistorialReclamo } from "@/services/ReclamosService";
 import TipoPrioridadBadge from "@/components/prioridad-badge";
+import type { ReclamoDetalle } from "./interfaces/reclamo-detalle.dto";
 
 interface ReclamoDetalleDialogProps {
   open: boolean;
@@ -35,7 +36,9 @@ const ReclamoDetalleDialog = ({
 }: ReclamoDetalleDialogProps) => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [reclamoDetalle, setReclamoDetalle] = useState<any>(null);
+  const [reclamoDetalle, setReclamoDetalle] = useState<ReclamoDetalle | null>(
+    null
+  );
   const [historialAsignaciones, setHistorialAsignaciones] = useState<
     HistorialAsignacion[]
   >([]);
@@ -115,3 +118,21 @@ const ReclamoDetalleDialog = ({
 };
 
 export default ReclamoDetalleDialog;
+/*
+<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {reclamoDetalle.imagenUrl?.map((url, index) => (
+                  <Card key={index}>
+                    <CardContent className="p-2">
+                      <p className="text-xs break-all">{url}</p>
+
+                      <img
+                        src={url}
+                        alt={`Imagen reclamo ${index + 1}`}
+                        className="w-full h-48 object-cover rounded-lg cursor-pointer"
+                        loading="lazy"
+                      />
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+*/

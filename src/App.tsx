@@ -11,7 +11,6 @@ import { ProtectedRoute } from "./routes/ProtectedRoute";
 import ReclamosScreen from "./reclamos/ReclamosScreen";
 import ReclamosPantallaPrincipal from "./reclamos/ConsultarReclamosScreen";
 import RegistroUsuarioPage from "./registro/RegistrarScreen";
-
 import GestionEmpleadosScreen from "./mi-area/GestionEmpleadosScreen";
 import ActivarCuentaScreen from "./auth/ActivarCuentaScreen";
 import GestionClientesScreen from "./clientes/GestionClientesScreen";
@@ -19,38 +18,35 @@ import GestionProyectosScreen from "./proyectos/GestionProyectosScreen";
 import GestionEncargadosScreen from "./encargados/GestiónEncargadosScreen";
 import OlvideContrasenaScreen from "./login/OlvideContraseña";
 import RestablecerContrasenaScreen from "./login/RecuperarContraseña";
+import { PermissionGuard } from "./guards/permisos-guard";
+import { Permisos } from "./enums/permisos.enum";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Rutas públicas */}
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route
-          path="/auth/activar-cuenta"
-          element={<ActivarCuentaScreen />}
-        />
+        <Route path="/auth/activar-cuenta" element={<ActivarCuentaScreen />} />
         <Route path="/" element={<LoginPage />} />
         <Route path="/recuperar-contraseña" element={<LoginPage />} />
-        <Route
-          path="/forgot-password"
-          element={<OlvideContrasenaScreen />}
-        />
+        <Route path="/forgot-password" element={<OlvideContrasenaScreen />} />
         <Route path="/" element={<LoginPage />} />
         <Route
           path="/reset-password"
           element={<RestablecerContrasenaScreen />}
         />
-
-        {/* Rutas protegidas */}
         <Route
           path="/mi-subarea"
           element={
             <ProtectedRoute>
-              <Layout>
-                <MiSubareaScreen />
-              </Layout>
+              <PermissionGuard
+                requiredPermissions={Permisos.AUTO_ASIGNAR_RECLAMO}
+              >
+                <Layout>
+                  <MiSubareaScreen />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
@@ -70,9 +66,11 @@ function App() {
           path="/feedback"
           element={
             <ProtectedRoute>
-              <Layout>
-                <FeedbackPage />
-              </Layout>
+              <PermissionGuard requiredPermissions={[Permisos.CREAR_FEEDBACK]}>
+                <Layout>
+                  <FeedbackPage />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
@@ -81,9 +79,15 @@ function App() {
           path="/reclamos-asignados"
           element={
             <ProtectedRoute>
-              <Layout>
-                <ReclamosAsignadosScreen />
-              </Layout>
+              <PermissionGuard
+                requiredPermissions={
+                  Permisos.REASIGNAR_RECLAMO_A_SUBAREA_AREA_EMPLEADO
+                }
+              >
+                <Layout>
+                  <ReclamosAsignadosScreen />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
@@ -92,9 +96,17 @@ function App() {
           path="/gestion-clientes"
           element={
             <ProtectedRoute>
-              <Layout>
-                <GestionClientesScreen />
-              </Layout>
+              <PermissionGuard
+                requiredPermissions={[
+                  Permisos.CREAR_USUARIOS,
+                  Permisos.EDITAR_USUARIOS,
+                  Permisos.ELIMINAR_USUARIOS,
+                ]}
+              >
+                <Layout>
+                  <GestionClientesScreen />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
@@ -103,9 +115,17 @@ function App() {
           path="/gestion-proyectos"
           element={
             <ProtectedRoute>
-              <Layout>
-                <GestionProyectosScreen />
-              </Layout>
+              <PermissionGuard
+                requiredPermissions={[
+                  Permisos.CREAR_PROYECTOS,
+                  Permisos.EDITAR_PROYECTOS,
+                  Permisos.ELIMINAR_PROYECTOS,
+                ]}
+              >
+                <Layout>
+                  <GestionProyectosScreen />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
@@ -120,47 +140,64 @@ function App() {
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/mi-area"
           element={
             <ProtectedRoute>
-              <Layout>
-                <MiAreaScreen />
-              </Layout>
+              <PermissionGuard
+                requiredPermissions={[
+                  Permisos.CREAR_USUARIOS,
+                  Permisos.ASIGNAR_RECLAMO_A_EMPLEADO,
+                ]}
+              >
+                <Layout>
+                  <MiAreaScreen />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/gestion-empleados"
           element={
             <ProtectedRoute>
-              <Layout>
-                <GestionEmpleadosScreen />
-              </Layout>
+              <PermissionGuard
+                requiredPermissions={[
+                  Permisos.CREAR_USUARIOS,
+                  Permisos.EDITAR_USUARIOS,
+                  Permisos.ELIMINAR_USUARIOS,
+                ]}
+              >
+                <Layout>
+                  <GestionEmpleadosScreen />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/mis-reclamos"
           element={
             <ProtectedRoute>
-              <Layout>
-                <ReclamosPantallaPrincipal />
-              </Layout>
+              <PermissionGuard
+                requiredPermissions={[Permisos.VISUALIZAR_ESTADO_DE_RECLAMO]}
+              >
+                <Layout>
+                  <ReclamosPantallaPrincipal />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
-
         <Route
           path="/crear-reclamo"
           element={
             <ProtectedRoute>
-              <Layout>
-                <ReclamosScreen />
-              </Layout>
+              <PermissionGuard requiredPermissions={Permisos.REGISTRAR_RECLAMO}>
+                <Layout>
+                  <ReclamosScreen />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
@@ -168,9 +205,17 @@ function App() {
           path="/gestión-encargados"
           element={
             <ProtectedRoute>
-              <Layout>
-                <GestionEncargadosScreen />
-              </Layout>
+              <PermissionGuard
+                requiredPermissions={[
+                  Permisos.CREAR_USUARIOS,
+                  Permisos.EDITAR_USUARIOS,
+                  Permisos.ELIMINAR_USUARIOS,
+                ]}
+              >
+                <Layout>
+                  <GestionEncargadosScreen />
+                </Layout>
+              </PermissionGuard>
             </ProtectedRoute>
           }
         />
