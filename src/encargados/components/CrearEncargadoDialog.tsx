@@ -13,7 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UserPlus } from "lucide-react";
 import { SelectAreaDropdown } from "@/components/select-area-dropdown";
-import { registrarEncargado } from "@/services/UsuariosService";
+import { registrarUsuario } from "@/services/UsuariosService";
 
 interface Props {
   onEncargadoCreado: () => void;
@@ -41,7 +41,7 @@ export function CrearEncargadoDialog({ onEncargadoCreado }: Props) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.area) {
       alert("Por favor, seleccione un área.");
       return;
@@ -50,21 +50,15 @@ export function CrearEncargadoDialog({ onEncargadoCreado }: Props) {
     setLoading(true);
 
     try {
-      /**
-       * MAPEO SEGÚN CreateUsuarioDto:
-       * El backend requiere 'nombreUsuario' y 'email' como obligatorios.
-       * También espera 'nombre' y 'area' (como string).
-       */
       const payload = {
-        nombreUsuario: formData.nombreUsuario, // Campo obligatorio en DTO
-        nombre: formData.nombreUsuario,        // Requerido por TS / Opcional en DTO
-        email: formData.email,                 // Campo obligatorio en DTO
-        area: formData.area,                   // Enviado como string (ID)
-        telefono: formData.telefono,           // Campo opcional
-        rol: "ENCARGADO_DE_ÁREA",              // Rol fijo para esta gestión
+        nombre: formData.nombreUsuario,
+        email: formData.email,
+        area: formData.area,
+        telefono: formData.telefono,
+        rol: "ENCARGADO_DE_ÁREA",
       };
 
-      await registrarEncargado(payload);
+      await registrarUsuario(payload);
 
       alert("¡Encargado registrado con éxito!");
       setOpen(false);
@@ -82,7 +76,9 @@ export function CrearEncargadoDialog({ onEncargadoCreado }: Props) {
       console.error("Error en registro:", error);
       const errorMsg = error.response?.data?.message;
       // NestJS devuelve errores de validación a veces como arrays
-      const mensaje = Array.isArray(errorMsg) ? errorMsg.join("\n") : errorMsg || "Error al crear encargado.";
+      const mensaje = Array.isArray(errorMsg)
+        ? errorMsg.join("\n")
+        : errorMsg || "Error al crear encargado.";
       alert(mensaje);
     } finally {
       setLoading(false);
@@ -107,7 +103,6 @@ export function CrearEncargadoDialog({ onEncargadoCreado }: Props) {
 
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
-            
             {/* Nombre Completo / Usuario */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="nombreUsuario" className="text-right">
@@ -172,9 +167,9 @@ export function CrearEncargadoDialog({ onEncargadoCreado }: Props) {
           </div>
 
           <DialogFooter>
-            <Button 
-              type="button" 
-              variant="ghost" 
+            <Button
+              type="button"
+              variant="ghost"
               onClick={() => setOpen(false)}
               disabled={loading}
             >
