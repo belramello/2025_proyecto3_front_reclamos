@@ -18,10 +18,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { registrarEmpleado } from "@/services/UsuariosService";
 import { obtenerSubareasDeUsuario } from "@/services/SubareaService";
+import { registrarUsuario } from "@/services/UsuariosService";
 
-export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: () => void }) {
+export function CrearEmpleadoDialog({
+  onEmpleadoCreado,
+}: {
+  onEmpleadoCreado?: () => void;
+}) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [subareas, setSubareas] = useState<any[]>([]);
@@ -30,7 +34,7 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
   const [formData, setFormData] = useState({
     nombreCompleto: "", // Aquí guardamos todo lo que escriba (Nombre + Apellido)
     email: "",
-    subarea: "", 
+    subarea: "",
   });
 
   useEffect(() => {
@@ -41,8 +45,8 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
 
   const cargarSubareas = async () => {
     try {
-      const data = await obtenerSubareasDeUsuario(); 
-      setSubareas(data || []); 
+      const data = await obtenerSubareasDeUsuario();
+      setSubareas(data || []);
     } catch (error) {
       console.error("Error cargando subáreas", error);
     }
@@ -57,27 +61,30 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
     setLoading(true);
 
     try {
-      // --- LÓGICA SIMPLIFICADA ---
-      // Mandamos TODO el texto al campo 'nombre' del backend.
-      // No mandamos campo 'apellido' porque la BD no lo tiene.
       const payload = {
-        nombre: formData.nombreCompleto, 
+        nombre: formData.nombreCompleto,
         email: formData.email,
         subarea: formData.subarea,
-        nombreUsuario: formData.email, // Usamos email como usuario
-        rol: "EMPLEADO"
+        rol: "EMPLEADO",
       };
 
-      await registrarEmpleado(payload as any);
+      await registrarUsuario(payload);
 
-      alert("¡Empleado creado con éxito! Se ha enviado el correo de activación.");
-      setOpen(false); 
-      setFormData({ nombreCompleto: "", email: "", subarea: "" }); // Reseteamos
+      alert(
+        "¡Empleado creado con éxito! Se ha enviado el correo de activación."
+      );
+      setOpen(false);
+      setFormData({ nombreCompleto: "", email: "", subarea: "" });
       if (onEmpleadoCreado) onEmpleadoCreado();
     } catch (error: any) {
       console.error(error);
       const mensaje = error.response?.data?.message;
-      alert("Error al crear empleado: " + (Array.isArray(mensaje) ? mensaje.join(", ") : mensaje || "Intente nuevamente"));
+      alert(
+        "Error al crear empleado: " +
+          (Array.isArray(mensaje)
+            ? mensaje.join(", ")
+            : mensaje || "Intente nuevamente")
+      );
     } finally {
       setLoading(false);
     }
@@ -92,13 +99,12 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
         <DialogHeader>
           <DialogTitle>Registrar Nuevo Empleado</DialogTitle>
           <DialogDescription>
-            Complete los datos. Se enviará un correo para configurar su contraseña.
+            Complete los datos. Se enviará un correo para configurar su
+            contraseña.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
-            
-            {/* CAMPO UNIFICADO: NOMBRE COMPLETO */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label htmlFor="nombreCompleto" className="text-right">
                 Empleado
@@ -134,8 +140,10 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
                 Subárea
               </Label>
               <div className="col-span-3">
-                <Select 
-                  onValueChange={(value) => setFormData({...formData, subarea: value})}
+                <Select
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, subarea: value })
+                  }
                   required
                 >
                   <SelectTrigger>
@@ -143,15 +151,17 @@ export function CrearEmpleadoDialog({ onEmpleadoCreado }: { onEmpleadoCreado?: (
                   </SelectTrigger>
                   <SelectContent>
                     {subareas.map((sub) => (
-                        <SelectItem key={sub._id || sub.id} value={sub._id || sub.id}>
-                            {sub.nombre}
-                        </SelectItem>
+                      <SelectItem
+                        key={sub._id || sub.id}
+                        value={sub._id || sub.id}
+                      >
+                        {sub.nombre}
+                      </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
-
           </div>
           <DialogFooter>
             <Button type="submit" disabled={loading}>

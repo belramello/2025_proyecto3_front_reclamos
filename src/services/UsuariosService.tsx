@@ -31,7 +31,7 @@ export const registrarUsuario = async (
 ): Promise<LoginResponseDto> => {
   try {
     const response = await api.post<LoginResponseDto>(
-      "/usuarios/registrar-cliente",
+      "/usuarios/create-usuario",
       data
     );
     return response.data;
@@ -40,36 +40,6 @@ export const registrarUsuario = async (
     if (error?.response?.status === 409) {
       throw new Error("El correo electrónico ya está registrado.");
     }
-    throw error;
-  }
-};
-
-export const registrarEmpleado = async (
-  data: CreateUsuarioDto
-): Promise<LoginResponseDto> => {
-  try {
-    const response = await api.post<LoginResponseDto>(
-      "/usuarios/gestion-empleados",
-      data
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error al registrar empleado", error);
-    throw error;
-  }
-};
-
-export const registrarEncargado = async (
-  data: CreateUsuarioDto
-): Promise<LoginResponseDto> => {
-  try {
-    const response = await api.post<LoginResponseDto>(
-      "/usuarios/encargados",
-      data
-    );
-    return response.data;
-  } catch (error) {
-    console.error("Error al registrar encargado", error);
     throw error;
   }
 };
