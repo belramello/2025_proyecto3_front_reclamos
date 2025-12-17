@@ -1,4 +1,3 @@
-// components/SelectTipoAsignacionDropdown.tsx
 import {
   Select,
   SelectContent,

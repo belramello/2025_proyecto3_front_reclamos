@@ -6,6 +6,6 @@ export interface LoginResponse {
     nombreUsuario: string;
     email: string;
     rol: string;
-    permisos: number[];
+    permisos: string[];
   };
 }
