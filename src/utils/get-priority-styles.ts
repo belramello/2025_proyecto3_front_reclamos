@@ -24,11 +24,12 @@ export const getPriorityStyles = (
         buttonColor: "bg-yellow-600 hover:bg-yellow-500",
       };
     default:
+      // Caso BAJA: Cambiado a VERDE para mantener consistencia
       return {
-        titleColor: "text-black",
-        border: "border border-gray-300",
+        titleColor: "text-green-600", // Antes text-black
+        border: "border-3 border-green-600", // Antes border-gray-300 (Grosor y color ajustados)
         icon: false,
-        buttonColor: "bg-green-950 hover:bg-green-900",
+        buttonColor: "bg-green-600 hover:bg-green-500", 
       };
   }
 };
