@@ -56,12 +56,16 @@ const ReclamoClienteCard = ({ reclamo }: ReclamoCardProps) => {
     try {
       const data = await obtenerHistorialReclamo(reclamo.id);
 
-      // 🔥 Normalización para evitar el error de undefined
+      // 🔥 Normalización e INVERSIÓN del array
+      // Al usar .reverse(), el último estado (el actual) queda en la posición 0
+      // y el componente HistorialEstadosDialog lo pintará de azul.
       setHistorialEstados(
-        (data.historialEstados || []).map((e) => ({
-          ...e,
-          fechaHoraFin: e.fechaHoraFin ?? null,
-        }))
+        (data.historialEstados || [])
+          .map((e) => ({
+            ...e,
+            fechaHoraFin: e.fechaHoraFin ?? null,
+          }))
+          .reverse() 
       );
 
       setHistorialAsig(data.historialAsignaciones || []);
