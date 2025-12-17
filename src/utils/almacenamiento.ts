@@ -1,7 +1,7 @@
 export const guardarToken = (
   accesToken: string,
   refreshToken: string | null,
-  permisos?: number[]
+  permisos?: string[]
 ) => {
   try {
     localStorage.setItem("accessToken", accesToken);
