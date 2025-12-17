@@ -222,6 +222,7 @@ const FeedbackPage: React.FC = () => {
         {/* ---------------- DIALOG ---------------- */}
         <FeedbackConfirmationDialog
           isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen(false)}
           rating={rating}
           comment={comment}
         />
