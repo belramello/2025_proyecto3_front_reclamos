@@ -12,7 +12,6 @@ export const obtenerReclamosAsignadosDeEmpleado = async (): Promise<
     const response = await api.get<ReclamoEnMovimientoDto[]>(
       `/reclamos/consultar-reclamos-asignados`
     );
-    console.log("response.data:", response.data);
     return response.data;
   } catch (error) {
     console.error(
@@ -30,7 +29,6 @@ export const obtenerReclamosAsignadosAUnArea = async (): Promise<
     const response = await api.get<ReclamoEnMovimientoDto[]>(
       `/reclamos/reclamos-area`
     );
-    console.log("response.data:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error al obtener los reclamos asignados del área:", error);
@@ -45,10 +43,12 @@ export const obtenerReclamosAsignadosAUnaSubArea = async (): Promise<
     const response = await api.get<ReclamoEnMovimientoDto[]>(
       `/reclamos/reclamos-subarea`
     );
-    console.log("response.data:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error al obtener los reclamos asignados del Sub área:", error);
+    console.error(
+      "Error al obtener los reclamos asignados del Sub área:",
+      error
+    );
     throw error;
   }
 };
@@ -185,16 +185,14 @@ export const obtenerReclamosDelUsuario = async (): Promise<
   }
 };
 
-export const autoAsignarReclamo = async (
-  reclamoId: string
-): Promise<void> => {
+export const autoAsignarReclamo = async (reclamoId: string): Promise<void> => {
   try {
     await api.patch(`/reclamos/autoasignar/${reclamoId}`);
   } catch (error) {
     console.error("Error al autoasignar el reclamo:", error);
     throw error;
   }
-}
+};
 
 // --- INTERFACES ---
 
