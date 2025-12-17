@@ -5,6 +5,7 @@ interface FeedbackConfirmationDialogProps {
   isOpen: boolean;
   rating: number;
   comment: string;
+  onClose: () => void;
 }
 
 const FeedbackConfirmationDialog: React.FC<FeedbackConfirmationDialogProps> = ({

@@ -29,7 +29,10 @@ export default function LoginPage() {
         email: formData.email,
         contraseña: formData.password,
       });
-      login(data.usuario.permisos);
+      const permisosComoString = data.usuario.permisos.map(p => String(p));
+      
+      login(permisosComoString);
+      //login(data.usuario.permisos);
       navigate("/inicio");
     } catch {
       setError("Credenciales incorrectas.");

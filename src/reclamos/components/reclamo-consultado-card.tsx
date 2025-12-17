@@ -34,7 +34,7 @@ interface ReclamoCardProps {
 }
 
 const ReclamoClienteCard = ({ reclamo }: ReclamoCardProps) => {
-  const [openDetalle, setOpenDetalle] = useState(false);
+  const [,setOpenDetalle] = useState<boolean>(false);
   const { titleColor, border, icon } = getPriorityStyles(reclamo.prioridad);
 
   const [openEstados, setOpenEstados] = useState(false);

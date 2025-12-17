@@ -20,7 +20,6 @@ import {
   Folder,
   UserCircle,
   Users,
-  Building,
   ChevronRight,
 } from "lucide-react";
 
