@@ -26,14 +26,14 @@ export const cerrarSesion = () => {
   }
 };
 
-export const activarCuentaUsuario = async (token: string, nuevaContrasena: string) => {
+export const activarCuentaUsuario = async (
+  token: string,
+  nuevaContrasena: string
+) => {
   try {
-    // CORRECCIÓN AQUÍ:
-    // El backend espera recibir "contraseña", no "nuevaContrasena".
-    // Mapeamos el valor para que coincida con el DTO del backend.
     const response = await api.post("/auth/activar-cuenta", {
       token,
-      contraseña: nuevaContrasena, 
+      contraseña: nuevaContrasena,
     });
     return response.data;
   } catch (error) {
@@ -41,14 +41,3 @@ export const activarCuentaUsuario = async (token: string, nuevaContrasena: strin
     throw error;
   }
 };
-/*export const registrarUsuario = async (
-  registrarUsuarioDto: RegistrarUsuarioDto
-): Promise<void> => {
-  try {
-    await api.post<LoginResponse>(`/auth/register`, registrarUsuarioDto);
-    return;
-  } catch (error) {
-    console.error("Error al registrar usuario:", error);
-    throw error;
-  }
-};  */

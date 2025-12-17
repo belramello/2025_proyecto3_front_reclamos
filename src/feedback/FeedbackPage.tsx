@@ -48,7 +48,8 @@ const FeedbackPage: React.FC = () => {
   // -------------------------
   // VALIDACIÓN: ESTADO RESUELTO
   // -------------------------
-  const estadoActual = reclamoSeleccionado?.historialEstado.at(-1)?.estado.nombre;
+  const estadoActual =
+    reclamoSeleccionado?.historialEstado.at(-1)?.estado.nombre;
   const puedeEnviarFeedback = estadoActual === "Resuelto";
 
   // -------------------------
@@ -112,7 +113,8 @@ const FeedbackPage: React.FC = () => {
         {/* ---------------- CARDS DE RECLAMOS ---------------- */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           {reclamos.map((reclamo) => {
-            const seleccionado = reclamo.nroTicket === reclamoSeleccionado?.nroTicket;
+            const seleccionado =
+              reclamo.nroTicket === reclamoSeleccionado?.nroTicket;
             const estado = reclamo.historialEstado.at(-1)?.estado.nombre;
 
             return (
@@ -125,7 +127,11 @@ const FeedbackPage: React.FC = () => {
                 }}
                 className={`
                   cursor-pointer rounded-2xl border p-4 transition
-                  ${seleccionado ? "border-blue-500 shadow-md" : "border-gray-200 hover:shadow"}
+                  ${
+                    seleccionado
+                      ? "border-blue-500 shadow-md"
+                      : "border-gray-200 hover:shadow"
+                  }
                 `}
               >
                 <p className="font-semibold text-gray-800">{reclamo.titulo}</p>
@@ -157,9 +163,7 @@ const FeedbackPage: React.FC = () => {
         {/* ---------------- DETALLE DEL RECLAMO ---------------- */}
         {reclamoSeleccionado && (
           <div className="mb-8 bg-gray-50 p-6 rounded-2xl border">
-            <h2 className="text-lg font-semibold mb-2">
-              Reclamo seleccionado
-            </h2>
+            <h2 className="text-lg font-semibold mb-2">Reclamo seleccionado</h2>
 
             <p className="font-medium">{reclamoSeleccionado.titulo}</p>
             <p className="text-sm text-gray-500 mb-2">
@@ -218,7 +222,6 @@ const FeedbackPage: React.FC = () => {
         {/* ---------------- DIALOG ---------------- */}
         <FeedbackConfirmationDialog
           isOpen={isDialogOpen}
-          onClose={() => setIsDialogOpen(false)}
           rating={rating}
           comment={comment}
         />

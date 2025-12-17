@@ -44,9 +44,11 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-[0_8px_25px_rgba(0,0,0,0.08)]">
-      <div className="flex justify-center mb-4">
-          <img src={logo} alt="Logo de la empresa" className="h-24 w-auto" /> 
-        </div>
+        <div className="flex justify-center mb-4">
+                   {" "}
+          <img src={logo} alt="Logo de la empresa" className="h-24 w-auto" />   
+             {" "}
+        </div>
         <h2 className="text-3xl font-semibold text-center mb-1 text-gray-800">
           Bienvenido
         </h2>
@@ -55,7 +57,6 @@ export default function LoginPage() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          
           {/* EMAIL */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -89,9 +90,7 @@ export default function LoginPage() {
           </div>
 
           {error && (
-            <div className="text-red-600 text-sm text-center mt-1">
-              {error}
-            </div>
+            <div className="text-red-600 text-sm text-center mt-1">{error}</div>
           )}
 
           {/* BOTÓN */}
@@ -104,7 +103,6 @@ export default function LoginPage() {
           >
             {loading ? "Cargando..." : "Ingresar"}
           </button>
-
         </form>
 
         <div className="mt-5 text-center">

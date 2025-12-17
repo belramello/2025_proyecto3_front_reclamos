@@ -7,14 +7,14 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { 
-  Calendar, 
-  Folder, 
-  UserCircle, 
-  MessageSquare, 
-  History, 
-  Users, 
-  Loader2 
+import {
+  Calendar,
+  Folder,
+  UserCircle,
+  MessageSquare,
+  History,
+  Users,
+  Loader2,
 } from "lucide-react";
 
 import TipoPrioridadBadge from "@/components/prioridad-badge";
@@ -34,13 +34,14 @@ interface ReclamoCardProps {
 }
 
 const ReclamoClienteCard = ({ reclamo }: ReclamoCardProps) => {
-  const [,setOpenDetalle] = useState<boolean>(false);
   const { titleColor, border, icon } = getPriorityStyles(reclamo.prioridad);
 
   const [openEstados, setOpenEstados] = useState(false);
   const [openAsignaciones, setOpenAsignaciones] = useState(false);
 
-  const [historialEstados, setHistorialEstados] = useState<HistorialEstadoDto[]>([]);
+  const [historialEstados, setHistorialEstados] = useState<
+    HistorialEstadoDto[]
+  >([]);
   const [historialAsig, setHistorialAsig] = useState<HistorialAsignacion[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -57,7 +58,7 @@ const ReclamoClienteCard = ({ reclamo }: ReclamoCardProps) => {
 
       // 🔥 Normalización para evitar el error de undefined
       setHistorialEstados(
-        (data.historialEstados || []).map(e => ({
+        (data.historialEstados || []).map((e) => ({
           ...e,
           fechaHoraFin: e.fechaHoraFin ?? null,
         }))
@@ -88,11 +89,10 @@ const ReclamoClienteCard = ({ reclamo }: ReclamoCardProps) => {
           </div>
 
           <CardTitle>
-            <button
-              onClick={() => setOpenDetalle(true)}
-              className="group flex items-start gap-2 text-left w-full transition-colors"
-            >
-              <span className={`${titleColor} mt-1 group-hover:opacity-80 transition-opacity shrink-0`}>
+            <button className="group flex items-start gap-2 text-left w-full transition-colors">
+              <span
+                className={`${titleColor} mt-1 group-hover:opacity-80 transition-opacity shrink-0`}
+              >
                 {icon}
               </span>
               <span className="text-xl font-bold text-gray-800 group-hover:text-blue-600 wrap-break-word">
@@ -120,7 +120,9 @@ const ReclamoClienteCard = ({ reclamo }: ReclamoCardProps) => {
 
             <div className="flex items-center gap-2">
               <MessageSquare size={16} className="text-gray-400" />
-              <span className="font-semibold text-gray-700">Estado Actual:</span>
+              <span className="font-semibold text-gray-700">
+                Estado Actual:
+              </span>
               <span className="ml-auto px-2 py-0.5 bg-blue-50 text-blue-700 rounded-full text-xs font-medium uppercase">
                 {reclamo.estadoActual.nombre}
               </span>
@@ -136,7 +138,9 @@ const ReclamoClienteCard = ({ reclamo }: ReclamoCardProps) => {
 
             <div className="flex items-center gap-2 border-b pb-2 mb-1">
               <Calendar size={16} className="text-gray-400" />
-              <span className="font-semibold text-gray-700">Fecha Actualización:</span>
+              <span className="font-semibold text-gray-700">
+                Fecha Actualización:
+              </span>
               <span className="ml-auto">
                 {formatearFechaArg(reclamo.estadoActual.fecha)}
               </span>
@@ -144,43 +148,51 @@ const ReclamoClienteCard = ({ reclamo }: ReclamoCardProps) => {
           </div>
 
           <div className="grid grid-cols-2 gap-2 pt-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               disabled={loading}
               className="flex items-center gap-2 text-[11px] h-9 px-2 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-all shadow-sm"
               onClick={() => cargarYMostrarHistorial("estados")}
             >
-              {loading ? <Loader2 size={14} className="animate-spin" /> : <History size={14} />}
+              {loading ? (
+                <Loader2 size={14} className="animate-spin" />
+              ) : (
+                <History size={14} />
+              )}
               Historial Estados
             </Button>
-            
-            <Button 
-              variant="outline" 
-              size="sm" 
+
+            <Button
+              variant="outline"
+              size="sm"
               disabled={loading}
               className="flex items-center gap-2 text-[11px] h-9 px-2 hover:bg-green-50 hover:text-green-700 hover:border-green-200 transition-all shadow-sm"
               onClick={() => cargarYMostrarHistorial("asignaciones")}
             >
-              {loading ? <Loader2 size={14} className="animate-spin" /> : <Users size={14} />}
+              {loading ? (
+                <Loader2 size={14} className="animate-spin" />
+              ) : (
+                <Users size={14} />
+              )}
               Historial Asignaciones
             </Button>
           </div>
         </CardContent>
       </Card>
 
-      <HistorialEstadosDialog 
-        open={openEstados} 
-        onOpenChange={setOpenEstados} 
-        ticketNro={reclamo.nroTicket} 
-        historial={historialEstados} 
+      <HistorialEstadosDialog
+        open={openEstados}
+        onOpenChange={setOpenEstados}
+        ticketNro={reclamo.nroTicket}
+        historial={historialEstados}
       />
 
-      <HistorialAsignacionesDialog 
-        open={openAsignaciones} 
-        onOpenChange={setOpenAsignaciones} 
-        ticketNro={reclamo.nroTicket} 
-        historial={historialAsig} 
+      <HistorialAsignacionesDialog
+        open={openAsignaciones}
+        onOpenChange={setOpenAsignaciones}
+        ticketNro={reclamo.nroTicket}
+        historial={historialAsig}
       />
     </>
   );

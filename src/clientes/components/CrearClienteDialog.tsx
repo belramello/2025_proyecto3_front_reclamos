@@ -15,7 +15,7 @@ import { registrarCliente } from "@/services/ClientesService"; // Asegúrate de 
 import { UserPlus } from "lucide-react";
 
 interface Props {
-    onClienteCreado: () => void;
+  onClienteCreado: () => void;
 }
 
 export function CrearClienteDialog({ onClienteCreado }: Props) {
@@ -40,24 +40,26 @@ export function CrearClienteDialog({ onClienteCreado }: Props) {
 
     try {
       const payload = {
-        nombre: formData.nombreCompleto, 
+        nombre: formData.nombreCompleto,
         email: formData.email,
-        direccion: formData.direccion, // Campo de la US
-        telefono: formData.telefono,   // Campo de la US
-        nombreUsuario: formData.email, 
+        direccion: formData.direccion,
+        telefono: formData.telefono,
         rol: "CLIENTE",
       };
-
       await registrarCliente(payload);
-
       alert("¡Cliente registrado! Se ha enviado el correo de activación.");
-      setOpen(false); 
-      // Reseteamos el formulario
-      setFormData({ nombreCompleto: "", email: "", direccion: "", telefono: "" });
+      setOpen(false);
+      setFormData({
+        nombreCompleto: "",
+        email: "",
+        direccion: "",
+        telefono: "",
+      });
       onClienteCreado();
     } catch (error: any) {
       console.error(error);
-      const mensaje = error.response?.data?.message || "Error al crear cliente.";
+      const mensaje =
+        error.response?.data?.message || "Error al crear cliente.";
       alert(mensaje);
     } finally {
       setLoading(false);
@@ -68,7 +70,7 @@ export function CrearClienteDialog({ onClienteCreado }: Props) {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button variant="default" className="gap-2">
-            <UserPlus size={16}/> Registrar Cliente
+          <UserPlus size={16} /> Registrar Cliente
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[500px]">
@@ -80,10 +82,10 @@ export function CrearClienteDialog({ onClienteCreado }: Props) {
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
-            
-            {/* Nombre */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="nombreCompleto" className="text-right">Nombre</Label>
+              <Label htmlFor="nombreCompleto" className="text-right">
+                Nombre
+              </Label>
               <Input
                 id="nombreCompleto"
                 name="nombreCompleto"
@@ -97,7 +99,9 @@ export function CrearClienteDialog({ onClienteCreado }: Props) {
 
             {/* Email */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="email" className="text-right">Email</Label>
+              <Label htmlFor="email" className="text-right">
+                Email
+              </Label>
               <Input
                 id="email"
                 name="email"
@@ -111,7 +115,9 @@ export function CrearClienteDialog({ onClienteCreado }: Props) {
 
             {/* Dirección */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="direccion" className="text-right">Dirección</Label>
+              <Label htmlFor="direccion" className="text-right">
+                Dirección
+              </Label>
               <Input
                 id="direccion"
                 name="direccion"
@@ -125,7 +131,9 @@ export function CrearClienteDialog({ onClienteCreado }: Props) {
 
             {/* Teléfono */}
             <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="telefono" className="text-right">Teléfono</Label>
+              <Label htmlFor="telefono" className="text-right">
+                Teléfono
+              </Label>
               <Input
                 id="telefono"
                 name="telefono"
@@ -136,7 +144,6 @@ export function CrearClienteDialog({ onClienteCreado }: Props) {
                 required
               />
             </div>
-
           </div>
           <DialogFooter>
             <Button type="submit" disabled={loading}>

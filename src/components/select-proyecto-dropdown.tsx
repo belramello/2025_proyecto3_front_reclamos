@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Select,
   SelectTrigger,
@@ -61,7 +61,8 @@ export function SelectProyectosDropdown({
   if (cargando) placeholderText = "Cargando proyectos...";
   else if (error) placeholderText = `Error (${error})`;
   else if (!clienteId) placeholderText = "Seleccione un cliente primero";
-  else if (proyectos.length === 0) placeholderText = "No hay proyectos disponibles";
+  else if (proyectos.length === 0)
+    placeholderText = "No hay proyectos disponibles";
 
   return (
     <Select
@@ -70,9 +71,7 @@ export function SelectProyectosDropdown({
       disabled={isDisabled}
     >
       <SelectTrigger className="w-[250px] h-9 px-3 text-sm">
-        <SelectValue>
-          {selectedTitulo || placeholderText}
-        </SelectValue>
+        <SelectValue>{selectedTitulo || placeholderText}</SelectValue>
       </SelectTrigger>
 
       <SelectContent>
